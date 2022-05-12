@@ -30,6 +30,7 @@ namespace WebSite.EndPoint
             #region Connection String
             string conncetionString = Configuration["ConnectionStrings:SqlServer"];
             services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(conncetionString));
+            services.AddDbContext<IdentityDatabaseContext>(option => option.UseSqlServer(conncetionString));
             #endregion
         }
 
