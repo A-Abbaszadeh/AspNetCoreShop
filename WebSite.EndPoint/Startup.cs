@@ -1,3 +1,5 @@
+using Application.Interfaces.Contexts;
+using Application.Visitors;
 using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence.Contexts;
+using Persistence.Contexts.MongoContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +34,9 @@ namespace WebSite.EndPoint
             #region Connection String
             string conncetionString = Configuration["ConnectionStrings:SqlServer"];
             services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(conncetionString));
+            #endregion
+
+            #region Identity and Security
             services.AddIdentityService(Configuration);
 
             services.AddAuthorization();
@@ -42,6 +48,12 @@ namespace WebSite.EndPoint
                 option.SlidingExpiration = true;
             });
             #endregion
+
+            #region MongoDb Services
+            services.AddTransient(typeof(IVisitorDbContext<>), typeof(VisitorDbContext<>));
+            services.AddTransient<ISaveVisitorInfo, SaveVisitorInfo>();
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
