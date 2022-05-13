@@ -4,11 +4,11 @@ using MongoDB.Driver;
 
 namespace Application.Visitors
 {
-    public class SaveVisitorInfo : ISaveVisitorInfo
+    public class SaveVisitorInfoService : ISaveVisitorInfoService
     {
         private readonly IVisitorDbContext<Visitor> _visitorDbContext;
         private readonly IMongoCollection<Visitor> _visitorCollection;
-        public SaveVisitorInfo(IVisitorDbContext<Visitor> visitorDbContext)
+        public SaveVisitorInfoService(IVisitorDbContext<Visitor> visitorDbContext)
         {
             _visitorDbContext = visitorDbContext;
             _visitorCollection = _visitorDbContext.GetCollection();

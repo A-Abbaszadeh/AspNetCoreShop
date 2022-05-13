@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebSite.EndPoint.Models.ViewModel.Register;
 using WebSite.EndPoint.Models.ViewModel.User;
+using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint.Controllers
 {
+    [ServiceFilter(typeof(SaveVisitorFilter))]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;

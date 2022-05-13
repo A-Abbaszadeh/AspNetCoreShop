@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Visitors
 {
-    public interface ISaveVisitorInfo
+    public interface ISaveVisitorInfoService
     {
         void Execute(RequestSaveVisitorInfoDto request);
     }

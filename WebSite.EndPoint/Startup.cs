@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint
 {
@@ -51,9 +52,12 @@ namespace WebSite.EndPoint
 
             #region MongoDb Services
             services.AddTransient(typeof(IVisitorDbContext<>), typeof(VisitorDbContext<>));
-            services.AddTransient<ISaveVisitorInfo, SaveVisitorInfo>();
+            services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>();
             #endregion
 
+            #region Filters
+            services.AddScoped<SaveVisitorFilter>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
