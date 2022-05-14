@@ -1,8 +1,9 @@
 ﻿using Application.Interfaces.Contexts;
 using Domain.Visitors;
 using MongoDB.Driver;
+using System;
 
-namespace Application.Visitors
+namespace Application.Visitors.SaveVisitorInfo
 {
     public class SaveVisitorInfoService : ISaveVisitorInfoService
     {
@@ -39,7 +40,9 @@ namespace Application.Visitors
                     Family = request.Device.Family,
                     Model = request.Device.Model,
                     IsSpider = request.Device.IsSpider,
-                }
+                },
+                VisitorId = request.VisitorId,
+                Time = DateTime.Now
             });
         }
     }

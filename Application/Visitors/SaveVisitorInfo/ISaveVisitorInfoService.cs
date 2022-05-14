@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Visitors
+namespace Application.Visitors.SaveVisitorInfo
 {
     public interface ISaveVisitorInfoService
     {

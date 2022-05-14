@@ -1,4 +1,4 @@
-﻿namespace Application.Visitors
+﻿namespace Application.Visitors.SaveVisitorInfo
 {
     public class VisitorVersionDto
     {

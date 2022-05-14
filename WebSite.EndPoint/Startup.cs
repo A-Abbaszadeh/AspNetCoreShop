@@ -1,5 +1,5 @@
 using Application.Interfaces.Contexts;
-using Application.Visitors;
+using Application.Visitors.SaveVisitorInfo;
 using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,8 +33,8 @@ namespace WebSite.EndPoint
             services.AddControllersWithViews();
 
             #region Connection String
-            string conncetionString = Configuration["ConnectionStrings:SqlServer"];
-            services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(conncetionString));
+            string connectionString = Configuration["ConnectionStrings:SqlServer"];
+            services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connectionString));
             #endregion
 
             #region Identity and Security

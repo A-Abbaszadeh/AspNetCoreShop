@@ -1,6 +1,9 @@
 ﻿using Application.Visitors;
+using Application.Visitors.SaveVisitorInfo;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 using UAParser;
 
 namespace WebSite.EndPoint.Utilities.Filters
@@ -32,6 +35,18 @@ namespace WebSite.EndPoint.Utilities.Filters
             var referrerLink = context.HttpContext.Request.Headers["Referrer"].ToString();
             var currentLink = context.HttpContext.Request.Path;
 
+            string visitorId = context.HttpContext.Request.Cookies["VisitorId"];
+            if (visitorId is null)
+            {
+                visitorId = Guid.NewGuid().ToString();
+                context.HttpContext.Response.Cookies.Append("VisitorId", visitorId, new CookieOptions
+                {
+                    Path = "/",
+                    HttpOnly = true,
+                    Expires = DateTime.Now.AddDays(30),
+                });
+            }
+
             _saveVisitorInfoService.Execute(new RequestSaveVisitorInfoDto
             {
                 Ip = ip,
@@ -56,7 +71,8 @@ namespace WebSite.EndPoint.Utilities.Filters
                     Family = clientInfo.Device.Family,
                     Model = clientInfo.Device.Model,
                     IsSpider = clientInfo.Device.IsSpider
-                }
+                },
+                VisitorId = visitorId
             });
         }
     }

@@ -1,3 +1,4 @@
+using Application.Visitors.GetTodayReport;
 using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +29,13 @@ namespace Admin.EndPoint
         {
             services.AddRazorPages();
 
+
             #region Connection String
-            string conncetionString = Configuration["ConnectionStrings:SqlServer"];
-            services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(conncetionString));
+            string connectionString = Configuration["ConnectionStrings:SqlServer"];
+            services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connectionString));
+            #endregion
+
+            #region Identity and Security
             services.AddIdentityService(Configuration);
 
             services.AddAuthorization();
@@ -41,6 +46,10 @@ namespace Admin.EndPoint
                 option.AccessDeniedPath = "/account/accessdenied";
                 option.SlidingExpiration = true;
             });
+            #endregion
+
+            #region MongoDb Services
+            services.AddTransient<IGetTodayReportService, GetTodayReportService>();
             #endregion
         }
 
