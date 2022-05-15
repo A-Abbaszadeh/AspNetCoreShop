@@ -26,7 +26,7 @@ namespace Application.Visitors.GetTodayReport
 
         public ResultTodayReportDto Execute()
         {
-            DateTime start = DateTime.Now;
+            DateTime start = DateTime.Now.Date;
             DateTime end = DateTime.Now.AddDays(1);
 
             var todayPageViewCount = _visitorCollection.AsQueryable()
@@ -42,15 +42,24 @@ namespace Application.Visitors.GetTodayReport
                 {
                     TotalPageViews = totalPageViewCount,
                     TotalVisitors = totalVisitorCount,
-                    PageViewPerVisit = totalPageViewCount / totalVisitorCount
+                    PageViewPerVisit = GetAverage(totalPageViewCount, totalVisitorCount)
                 },
                 TodayState = new TodayStateDto
                 {
                     PageViews = todayPageViewCount,
                     Visitors = todayVisitorCount,
-                    PageViewPerVisit = todayPageViewCount / todayVisitorCount
+                    PageViewPerVisit = GetAverage(todayPageViewCount, todayVisitorCount)
                 }
             };
+        }
+
+        private float GetAverage(long visitPage, long visitor)
+        {
+            if (visitor == 0)
+            {
+                return 0;
+            }
+            return visitPage / visitor;
         }
     }
 

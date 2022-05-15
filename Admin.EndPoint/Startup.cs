@@ -1,3 +1,4 @@
+using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
 using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence.Contexts;
+using Persistence.Contexts.MongoContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +51,7 @@ namespace Admin.EndPoint
             #endregion
 
             #region MongoDb Services
+            services.AddTransient(typeof(IVisitorDbContext<>), typeof(VisitorDbContext<>));
             services.AddTransient<IGetTodayReportService, GetTodayReportService>();
             #endregion
         }
