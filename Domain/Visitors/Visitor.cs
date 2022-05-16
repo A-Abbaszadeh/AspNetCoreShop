@@ -23,6 +23,7 @@ namespace Domain.Visitors
         public VisitorVersion OperatingSystem { get; set; }
         public Device Device { get; set; }
         public string VisitorId { get; set; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime Time { get; set; }
     }
 }

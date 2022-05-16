@@ -3,6 +3,7 @@
 @{
 }
 @section Styles{
+    <link href="~/Theme/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
     <link href="~/Theme/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="~/Theme/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
 }
@@ -134,160 +135,304 @@
 </div>
 
 <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                        <div class="widget widget-table-two">
+    <div class="widget widget-table-two">
 
-                            <div class="widget-heading">
-                                <h5 class="">سفارشات اخیر</h5>
-                            </div>
+        <div class="widget-heading">
+            <h5 class="">سفارشات اخیر</h5>
+        </div>
 
-                            <div class="widget-content">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th><div class="th-content">مشتری</div></th>
-                                                <th><div class="th-content">محصول</div></th>
-                                                <th><div class="th-content">صورتحساب</div></th>
-                                                <th><div class="th-content th-heading">قیمت</div></th>
-                                                <th><div class="th-content">وضعیت</div></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">اندی کینگ</div></td>
-                                                <td><div class="td-content product-brand">نایک اسپرت</div></td>
-                                                <td><div class="td-content">#76894</div></td>
-                                                <td><div class="td-content pricing"><span class="">88000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-primary">حمل شده</span></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">ایرین کالینز</div></td>
-                                                <td><div class="td-content product-brand">بلندگو</div></td>
-                                                <td><div class="td-content">#75844</div></td>
-                                                <td><div class="td-content pricing"><span class="">840000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-success">پرداخت شده</span></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">لوری فاکس</div></td>
-                                                <td><div class="td-content product-brand">دوربین</div></td>
-                                                <td><div class="td-content">#66894</div></td>
-                                                <td><div class="td-content pricing"><span class="">1260000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-danger">در انتظار</span></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">لوک عاج</div></td>
-                                                <td><div class="td-content product-brand">هدفون</div></td>
-                                                <td><div class="td-content">#46894</div></td>
-                                                <td><div class="td-content pricing"><span class="">560000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-success">پرداخت شده</span></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">رایان کالینز</div></td>
-                                                <td><div class="td-content product-brand">ورزش</div></td>
-                                                <td><div class="td-content">#89891</div></td>
-                                                <td><div class="td-content pricing"><span class="">108000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-primary">حمل شده</span></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">نیا هیلیر</div></td>
-                                                <td><div class="td-content product-brand">عینک</div></td>
-                                                <td><div class="td-content">#26974</div></td>
-                                                <td><div class="td-content pricing"><span class="">1680000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-primary">حمل شده</span></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">سونیا شاو</div></td>
-                                                <td><div class="td-content product-brand">ساعت</div></td>
-                                                <td><div class="td-content">#76844</div></td>
-                                                <td><div class="td-content pricing"><span class="">110000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="badge outline-badge-success">پرداخت شده</span></div></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="widget-content">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><div class="th-content">مشتری</div></th>
+                            <th><div class="th-content">محصول</div></th>
+                            <th><div class="th-content">صورتحساب</div></th>
+                            <th><div class="th-content th-heading">قیمت</div></th>
+                            <th><div class="th-content">وضعیت</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">اندی کینگ</div></td>
+                            <td><div class="td-content product-brand">نایک اسپرت</div></td>
+                            <td><div class="td-content">#76894</div></td>
+                            <td><div class="td-content pricing"><span class="">88000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-primary">حمل شده</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">ایرین کالینز</div></td>
+                            <td><div class="td-content product-brand">بلندگو</div></td>
+                            <td><div class="td-content">#75844</div></td>
+                            <td><div class="td-content pricing"><span class="">840000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-success">پرداخت شده</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">لوری فاکس</div></td>
+                            <td><div class="td-content product-brand">دوربین</div></td>
+                            <td><div class="td-content">#66894</div></td>
+                            <td><div class="td-content pricing"><span class="">1260000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-danger">در انتظار</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">لوک عاج</div></td>
+                            <td><div class="td-content product-brand">هدفون</div></td>
+                            <td><div class="td-content">#46894</div></td>
+                            <td><div class="td-content pricing"><span class="">560000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-success">پرداخت شده</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">رایان کالینز</div></td>
+                            <td><div class="td-content product-brand">ورزش</div></td>
+                            <td><div class="td-content">#89891</div></td>
+                            <td><div class="td-content pricing"><span class="">108000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-primary">حمل شده</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">نیا هیلیر</div></td>
+                            <td><div class="td-content product-brand">عینک</div></td>
+                            <td><div class="td-content">#26974</div></td>
+                            <td><div class="td-content pricing"><span class="">1680000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-primary">حمل شده</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content customer-name"><img src="~/Theme/assets/img/90x90.jpg" alt="avatar">سونیا شاو</div></td>
+                            <td><div class="td-content product-brand">ساعت</div></td>
+                            <td><div class="td-content">#76844</div></td>
+                            <td><div class="td-content pricing"><span class="">110000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="badge outline-badge-success">پرداخت شده</span></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                        <div class="widget widget-table-three">
+    <div class="widget widget-table-three">
 
-                            <div class="widget-heading">
-                                <h5 class=""> محصول برتر فروش</h5>
-                            </div>
+        <div class="widget-heading">
+            <h5 class=""> محصول برتر فروش</h5>
+        </div>
 
-                            <div class="widget-content">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th><div class="th-content">محصول</div></th>
-                                                <th><div class="th-content th-heading">قیمت</div></th>
-                                                <th><div class="th-content th-heading">تخفیف</div></th>
-                                                <th><div class="th-content">فروخته شده</div></th>
-                                                <th><div class="th-content">منبع</div></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">بلندگو</div></td>
-                                                <td><div class="td-content"><span class="pricing">860000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">10000 تومان</span></div></td>
-                                                <td><div class="td-content">240</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">مستقیم</a></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">عینک</div></td>
-                                                <td><div class="td-content"><span class="pricing">560000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">50000 تومان</span></div></td>
-                                                <td><div class="td-content">190</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">گوگل</a></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">ساعت</div></td>
-                                                <td><div class="td-content"><span class="pricing">88000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">20000 تومان</span></div></td>
-                                                <td><div class="td-content">66</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">تبلیغات</a></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">لپتاپ</div></td>
-                                                <td><div class="td-content"><span class="pricing">110000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">56000 تومان</span></div></td>
-                                                <td><div class="td-content">35</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">ایمیل</a></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">دوربین</div></td>
-                                                <td><div class="td-content"><span class="pricing">2500000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">120000 تومان</span></div></td>
-                                                <td><div class="td-content">30</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">معرف</a></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">کفش</div></td>
-                                                <td><div class="td-content"><span class="pricing">1180000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">460000 تومان</span></div></td>
-                                                <td><div class="td-content">130</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">گوگل</a></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">هدفون</div></td>
-                                                <td><div class="td-content"><span class="pricing">1680000 تومان</span></div></td>
-                                                <td><div class="td-content"><span class="discount-pricing">560000 تومان</span></div></td>
-                                                <td><div class="td-content">170</div></td>
-                                                <td><div class="td-content"><a href="javascript:void(0);" class="">Ads</a></div></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="widget-content">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><div class="th-content">محصول</div></th>
+                            <th><div class="th-content th-heading">قیمت</div></th>
+                            <th><div class="th-content th-heading">تخفیف</div></th>
+                            <th><div class="th-content">فروخته شده</div></th>
+                            <th><div class="th-content">منبع</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">بلندگو</div></td>
+                            <td><div class="td-content"><span class="pricing">860000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">10000 تومان</span></div></td>
+                            <td><div class="td-content">240</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">مستقیم</a></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">عینک</div></td>
+                            <td><div class="td-content"><span class="pricing">560000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">50000 تومان</span></div></td>
+                            <td><div class="td-content">190</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">گوگل</a></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">ساعت</div></td>
+                            <td><div class="td-content"><span class="pricing">88000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">20000 تومان</span></div></td>
+                            <td><div class="td-content">66</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">تبلیغات</a></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">لپتاپ</div></td>
+                            <td><div class="td-content"><span class="pricing">110000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">56000 تومان</span></div></td>
+                            <td><div class="td-content">35</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">ایمیل</a></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">دوربین</div></td>
+                            <td><div class="td-content"><span class="pricing">2500000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">120000 تومان</span></div></td>
+                            <td><div class="td-content">30</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">معرف</a></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">کفش</div></td>
+                            <td><div class="td-content"><span class="pricing">1180000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">460000 تومان</span></div></td>
+                            <td><div class="td-content">130</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">گوگل</a></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="td-content product-name"><img src="~/Theme/assets/img/90x90.jpg" alt="product">هدفون</div></td>
+                            <td><div class="td-content"><span class="pricing">1680000 تومان</span></div></td>
+                            <td><div class="td-content"><span class="discount-pricing">560000 تومان</span></div></td>
+                            <td><div class="td-content">170</div></td>
+                            <td><div class="td-content"><a href="javascript:void(0);" class="">Ads</a></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+<div id="chartLine" class="col-xl-12 layout-top-spacing layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <h4>بازدید امروز</h4>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div id="today-s-line" class=""></div>
+
+        </div>
+    </div>
+</div>
+
+<div id="chartLine" class="col-xl-12 layout-top-spacing layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <h4>بازدید ماه گذشته</h4>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div id="month-s-line" class=""></div>
+
+        </div>
+    </div>
+</div>
+
 
 @section Scripts{
+    
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="~/Theme/plugins/apex/apexcharts.min.js"></script>
     <script src="~/Theme/assets/js/dashboard/dash_1.js"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+    <script src="~/Theme/assets/js/scrollspyNav.js"></script>
+    <script>
+        var displayHour = @Html.Raw(Json.Serialize(Model.ResultTodayReport.VisitPerHour.Display));
+        var ValueHour = @Html.Raw(Json.Serialize(Model.ResultTodayReport.VisitPerHour.Value));
+        // Simple Line
+        var TodaySline = {
+          chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+              enabled: false
+            },
+            toolbar: {
+              show: false,
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            curve: 'straight'
+          },
+          series: [{
+            name: "بازدید",
+            data: ValueHour //[90, 2, 35, 51, 49, 62, 69, 91, 148]
+          }],
+          title: {
+            text: 'تعداد بازدید در هر ساعت',
+            align: 'right',
+            offsetX: -95,
+          },
+          grid: {
+            row: {
+              colors: ['#f1f2f3', 'transparent'], // takes an array which will be repeated on columns
+              opacity: 0.5
+            },
+          },
+          xaxis: {
+            categories: displayHour //['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر'],
+          },
+          yaxis: {
+            labels: {
+              offsetX: -20,
+            }
+          }
+        }
+
+        var todayChart = new ApexCharts(
+          document.querySelector("#today-s-line"),
+          TodaySline
+        );
+
+        todayChart.render();
+
+        //------------------------------------------------
+
+        var displayMonth = @Html.Raw(Json.Serialize(Model.ResultTodayReport.GeneralState.VisitPerDay.Display));
+        var ValueMonth = @Html.Raw(Json.Serialize(Model.ResultTodayReport.GeneralState.VisitPerDay.Value));
+        // Simple Line
+        var MonthSline = {
+          chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+              enabled: false
+            },
+            toolbar: {
+              show: false,
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            curve: 'straight'
+          },
+          series: [{
+            name: "بازدید",
+            data: ValueMonth //[90, 2, 35, 51, 49, 62, 69, 91, 148]
+          }],
+          title: {
+            text: 'تعداد بازدید در هر روز',
+            align: 'right',
+            offsetX: -95,
+          },
+          grid: {
+            row: {
+              colors: ['#f1f2f3', 'transparent'], // takes an array which will be repeated on columns
+              opacity: 0.5
+            },
+          },
+          xaxis: {
+            categories: displayMonth //['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر'],
+          },
+          yaxis: {
+            labels: {
+              offsetX: -20,
+            }
+          }
+        }
+
+        var monthChart = new ApexCharts(
+          document.querySelector("#month-s-line"),
+          MonthSline
+        );
+
+        monthChart.render();
+    </script>
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 }
