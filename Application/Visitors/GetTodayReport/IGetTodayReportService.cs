@@ -36,8 +36,24 @@ namespace Application.Visitors.GetTodayReport
             var totalPageViewCount = _visitorCollection.AsQueryable().LongCount();
             var totalVisitorCount = _visitorCollection.AsQueryable().GroupBy(p => p.VisitorId).LongCount();
 
-            VisitCountDto visitPerHour = CalculateVisitPerHour();
-            VisitCountDto visitPerDay = CalculateVisitPerDay();
+            VisitCountDto visitPerHour = GetVisitPerHour();
+            VisitCountDto visitPerDay = GetVisitPerDay();
+
+            var visitors = _visitorCollection.AsQueryable()
+                .OrderByDescending(p => p.Time)
+                .Take(10)
+                .Select(p => new VisitorDto
+                {
+                    Id = p.Id,
+                    Ip = p.Ip,
+                    CurrentLink = p.CurrentLink,
+                    ReferrerLink = p.ReferrerLink,
+                    Browser = p.Browser.Family,
+                    OperatingSystem = p.OperatingSystem.Family,
+                    IsSpider = p.Device.IsSpider,
+                    Time = p.Time,
+                    VisitorId = p.VisitorId
+                }).ToList();
 
             return new ResultTodayReportDto
             {
@@ -54,11 +70,12 @@ namespace Application.Visitors.GetTodayReport
                     Visitors = todayVisitorCount,
                     PageViewPerVisit = GetAverage(todayPageViewCount, todayVisitorCount)
                 },
-                VisitPerHour = visitPerHour
+                VisitPerHour = visitPerHour,
+                Visitors = visitors
             };
         }
 
-        private VisitCountDto CalculateVisitPerHour()
+        private VisitCountDto GetVisitPerHour()
         {
             DateTime start = DateTime.Now.Date;
             DateTime end = DateTime.Now.AddDays(1);
@@ -82,7 +99,7 @@ namespace Application.Visitors.GetTodayReport
             return visitperHour;
         }
 
-        private VisitCountDto CalculateVisitPerDay()
+        private VisitCountDto GetVisitPerDay()
         {
             DateTime start = DateTime.Now.AddDays(-30);
             DateTime end = DateTime.Now.AddDays(1);
@@ -122,6 +139,7 @@ namespace Application.Visitors.GetTodayReport
         public GeneralStateDto GeneralState { get; set; }
         public TodayStateDto TodayState { get; set; }
         public VisitCountDto VisitPerHour { get; set; }
+        public List<VisitorDto> Visitors { get; set; }
     }
     public class GeneralStateDto
     {
@@ -140,5 +158,18 @@ namespace Application.Visitors.GetTodayReport
     {
         public string[] Display { get; set; }
         public int[] Value { get; set; }
+    }
+
+    public class VisitorDto
+    {
+        public string Id { get; set; }
+        public string Ip { get; set; }
+        public string CurrentLink { get; set; }
+        public string ReferrerLink { get; set; }
+        public string Browser { get; set; }
+        public string OperatingSystem { get; set; }
+        public bool IsSpider { get; set; }
+        public DateTime Time { get; set; }
+        public string VisitorId { get; set; }
     }
 }
