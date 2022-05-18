@@ -1,4 +1,5 @@
 using Application.Interfaces.Contexts;
+using Application.Visitors.OnlineVisitors;
 using Application.Visitors.SaveVisitorInfo;
 using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +15,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSite.EndPoint.Hubs;
 using WebSite.EndPoint.Utilities.Filters;
+using WebSite.EndPoint.Utilities.Middlewares;
 
 namespace WebSite.EndPoint
 {
@@ -31,6 +34,8 @@ namespace WebSite.EndPoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSignalR();
+
 
             #region Connection String
             string connectionString = Configuration["ConnectionStrings:SqlServer"];
@@ -53,11 +58,13 @@ namespace WebSite.EndPoint
             #region MongoDb Services
             services.AddTransient(typeof(IVisitorDbContext<>), typeof(VisitorDbContext<>));
             services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>();
+            services.AddTransient<IOnlineVisitorService, OnlineVisitorService>();
             #endregion
 
             #region Filters
             services.AddScoped<SaveVisitorFilter>();
             #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +80,9 @@ namespace WebSite.EndPoint
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSetVisitorId();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -86,6 +96,8 @@ namespace WebSite.EndPoint
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<OnlineVisitorHub>("/chathub");
             });
         }
     }

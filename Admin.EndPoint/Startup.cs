@@ -1,5 +1,6 @@
 using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
+using Application.Visitors.OnlineVisitors;
 using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,6 +54,7 @@ namespace Admin.EndPoint
             #region MongoDb Services
             services.AddTransient(typeof(IVisitorDbContext<>), typeof(VisitorDbContext<>));
             services.AddTransient<IGetTodayReportService, GetTodayReportService>();
+            services.AddTransient<IOnlineVisitorService, OnlineVisitorService>();
             #endregion
         }
 
