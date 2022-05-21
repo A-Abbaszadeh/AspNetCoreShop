@@ -37,7 +37,7 @@ namespace WebSite.EndPoint
             services.AddSignalR();
 
 
-            #region Connection String
+            #region Sql Server
             string connectionString = Configuration["ConnectionStrings:SqlServer"];
             services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connectionString));
             #endregion

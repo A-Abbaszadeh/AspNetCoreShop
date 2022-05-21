@@ -24,7 +24,6 @@ namespace WebSite.EndPoint.Hubs
         {
             var visitorId = Context.GetHttpContext().Request.Cookies["VisitorId"];
             _onlineVisitorService.DisconnectUser(visitorId);
-            var onlineVisitorCount = _onlineVisitorService.GetCount();
             return base.OnDisconnectedAsync(exception);
         }
     }

@@ -1,7 +1,10 @@
 ﻿using Application.Interfaces.Contexts;
 using Domain.Attributes;
+using Domain.Catalogs;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityConfigurations;
+using Persistence.Seeds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,22 +20,31 @@ namespace Persistence.Contexts
         {
         }
 
+        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogType> CatalogTypes { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().Property<DateTime?>("InsertTime");
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute),true).Length > 0)
                 {
-                    modelBuilder.Entity(entityType.Name).Property<DateTime>("InsertTime");
+                    modelBuilder.Entity(entityType.Name).Property<DateTime>("InsertTime").HasDefaultValue(DateTime.Now);
                     modelBuilder.Entity(entityType.Name).Property<DateTime?>("UpdateTime");
                     modelBuilder.Entity(entityType.Name).Property<DateTime?>("RemoveTime");
-                    modelBuilder.Entity(entityType.Name).Property<bool>("IsRemoved");
+                    modelBuilder.Entity(entityType.Name).Property<bool>("IsRemoved").HasDefaultValue(false);
                 }
             }
+            modelBuilder.Entity<CatalogType>().HasQueryFilter(ct => EF.Property<bool>(ct, "IsRemoved") == false);
+
+            modelBuilder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
+
+            DatabaseContextSeed.CatalogSeed(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
         }
-
         public override int SaveChanges()
         {
             var modifiedEntities = ChangeTracker.Entries()
@@ -42,7 +54,7 @@ namespace Persistence.Contexts
 
             foreach (var item in modifiedEntities)
             {
-                var entityType = item.Context.Model.FindEntityType(item.GetType());
+                var entityType = item.Context.Model.FindEntityType(item.Entity.GetType());
 
                 var inserted = entityType.FindProperty("InsertTime");
                 var updated = entityType.FindProperty("UpdateTime");
@@ -61,7 +73,7 @@ namespace Persistence.Contexts
                 {
                     item.Property("RemoveTime").CurrentValue = DateTime.Now;
                     item.Property("IsRemoved").CurrentValue = true;
-
+                    item.State = EntityState.Modified;
                 }
             }
             return base.SaveChanges();

@@ -1,7 +1,10 @@
+using Admin.EndPoint.MappingProfiles;
+using Application.Catalogs.CatalogTypes;
 using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
 using Application.Visitors.OnlineVisitors;
 using Infrastructure.IdentityConfigs;
+using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,10 +35,10 @@ namespace Admin.EndPoint
         {
             services.AddRazorPages();
 
-
-            #region Connection String
+            #region Sql Server
             string connectionString = Configuration["ConnectionStrings:SqlServer"];
             services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connectionString));
+            services.AddScoped<IDatabaseContext, DatabaseContext>();
             #endregion
 
             #region Identity and Security
@@ -56,6 +59,13 @@ namespace Admin.EndPoint
             services.AddTransient<IGetTodayReportService, GetTodayReportService>();
             services.AddTransient<IOnlineVisitorService, OnlineVisitorService>();
             #endregion
+
+            #region Mapper
+            services.AddAutoMapper(typeof(CatalogMappingProfile));
+            services.AddAutoMapper(typeof(CatalogVMMappingProgile));
+            #endregion
+
+            services.AddTransient<ICatalogTypeService, CatalogTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

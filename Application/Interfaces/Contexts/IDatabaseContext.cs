@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+﻿using Domain.Catalogs;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,16 @@ namespace Application.Interfaces.Contexts
 {
     public interface IDatabaseContext
     {
+        #region DbSets
+        DbSet<CatalogBrand> CatalogBrands { get; set; }
+        DbSet<CatalogType> CatalogTypes { get; set; }
+        #endregion
+
+        #region Signatures Method Of EF Core
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        #endregion
     }
 }
