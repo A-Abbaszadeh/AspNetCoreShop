@@ -1,7 +1,9 @@
+using Application.Catalogs.GetMenuItem;
 using Application.Interfaces.Contexts;
 using Application.Visitors.OnlineVisitors;
 using Application.Visitors.SaveVisitorInfo;
 using Infrastructure.IdentityConfigs;
+using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +40,8 @@ namespace WebSite.EndPoint
 
 
             #region Sql Server
+            services.AddTransient<IDatabaseContext, DatabaseContext>();
+
             string connectionString = Configuration["ConnectionStrings:SqlServer"];
             services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connectionString));
             #endregion
@@ -63,6 +67,14 @@ namespace WebSite.EndPoint
 
             #region Filters
             services.AddScoped<SaveVisitorFilter>();
+            #endregion
+
+            #region Mapper
+            services.AddAutoMapper(typeof(CatalogMappingProfile));
+            #endregion
+
+            #region Others
+            services.AddTransient<IGetMenuItemService, GetMenuItemService>();
             #endregion
 
         }

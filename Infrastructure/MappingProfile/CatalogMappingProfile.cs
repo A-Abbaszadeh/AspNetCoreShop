@@ -1,4 +1,5 @@
 ﻿using Application.Catalogs.CatalogTypes;
+using Application.Catalogs.GetMenuItem;
 using AutoMapper;
 using Domain.Catalogs;
 using System;
@@ -20,6 +21,18 @@ namespace Infrastructure.MappingProfile
                 dest => dest.SubTypeCount,
                 option => option.MapFrom(src => src.SubType.Count)
                 );
+
+            CreateMap<CatalogType, MenuItemDto>()
+                .ForMember(
+                dest => dest.Name,
+                option => option.MapFrom(src => src.Type))
+                .ForMember(
+                dest => dest.ParentId,
+                option => option.MapFrom(src => src.ParentCatalogTypeId))
+                .ForMember(
+                dest => dest.SubMenu,
+                option => option.MapFrom(src => src.SubType));
+                
         }
     }
 }
