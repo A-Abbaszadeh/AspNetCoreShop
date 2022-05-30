@@ -15,6 +15,7 @@ namespace Application.Interfaces.Contexts
         #region DbSets
         DbSet<CatalogBrand> CatalogBrands { get; set; }
         DbSet<CatalogType> CatalogTypes { get; set; }
+        DbSet<CatalogItem> CatalogItems { get; set; }
         #endregion
 
         #region Signatures Method Of EF Core

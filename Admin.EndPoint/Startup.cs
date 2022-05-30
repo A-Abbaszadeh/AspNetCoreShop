@@ -1,8 +1,12 @@
 using Admin.EndPoint.MappingProfiles;
+using Application.Catalogs.CatalogItems.AddNewCatalogItem;
+using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Catalogs.CatalogTypes;
 using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
 using Application.Visitors.OnlineVisitors;
+using FluentValidation;
+using Infrastructure.ExternalApi.ImageServer;
 using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
@@ -65,7 +69,17 @@ namespace Admin.EndPoint
             services.AddAutoMapper(typeof(CatalogVMMappingProgile));
             #endregion
 
+            #region Application
             services.AddTransient<ICatalogTypeService, CatalogTypeService>();
+            services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemService>();
+            services.AddTransient<ICatalogItemService, CatalogItemService>();
+            services.AddTransient<IImageUploadService, ImageUploadService>();
+            #endregion
+
+            #region Fluent validation
+            services.AddTransient<IValidator<AddNewCatalogItemDto>, AddNewCatalogItemDtoValidator>();
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
