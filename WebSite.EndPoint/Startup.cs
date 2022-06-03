@@ -1,3 +1,5 @@
+using Application.Catalogs.CatalogItems.GetCatalogItemPLP;
+using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.GetMenuItem;
 using Application.Interfaces.Contexts;
 using Application.Visitors.OnlineVisitors;
@@ -73,8 +75,10 @@ namespace WebSite.EndPoint
             services.AddAutoMapper(typeof(CatalogMappingProfile));
             #endregion
 
-            #region Others
+            #region Application
             services.AddTransient<IGetMenuItemService, GetMenuItemService>();
+            services.AddTransient<IGetCatalogItemPLPService, GetCatalogItemPLPService>();
+            services.AddTransient<IUriComposerService>(x => new UriComposerService(Configuration["Domain"]));
             #endregion
 
         }
