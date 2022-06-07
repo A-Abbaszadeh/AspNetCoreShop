@@ -1,4 +1,5 @@
-﻿using Domain.Catalogs;
+﻿using Domain.Baskets;
+using Domain.Catalogs;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +17,8 @@ namespace Application.Interfaces.Contexts
         DbSet<CatalogBrand> CatalogBrands { get; set; }
         DbSet<CatalogType> CatalogTypes { get; set; }
         DbSet<CatalogItem> CatalogItems { get; set; }
+        DbSet<Basket> Baskets { get; set; }
+        DbSet<BasketItem> BasketItems { get; set; }
         #endregion
 
         #region Signatures Method Of EF Core
