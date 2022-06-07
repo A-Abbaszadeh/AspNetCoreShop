@@ -13,6 +13,7 @@ namespace Application.Baskets
     public interface IBasketService
     {
         BasketDto GetOrCreateBasketForUser(string buyerId);
+        void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1);
     }
     public class BasketService : IBasketService
     {
@@ -65,6 +66,23 @@ namespace Application.Baskets
                 BuyerId = basket.BuyerId
             };
         }
+
+        public void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1)
+        {
+            var basket = _context.Baskets.Find(basketId);
+            if (basket is null)
+            {
+                throw new Exception("");
+            }
+            var catalogItemPrice = _context.CatalogItems
+                .Where(ci => ci.Id == catalogItemId)
+                .Select(ci => ci.Price)
+                .FirstOrDefault();
+
+            basket.AddItem(catalogItemPrice, quantity, catalogItemId);
+            _context.SaveChanges();
+        }
+
     }
     public class BasketDto
     {

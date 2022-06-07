@@ -1,3 +1,4 @@
+using Application.Baskets;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Application.Catalogs.CatalogItems.UriComposer;
@@ -82,6 +83,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPService>();
             var imageServerDomain = Configuration["Domain"];
             services.AddTransient<IUriComposerService>(x => new UriComposerService(imageServerDomain));
+            services.AddTransient<IBasketService, BasketService>();
             #endregion
 
         }
