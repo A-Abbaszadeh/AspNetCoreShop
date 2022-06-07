@@ -20,7 +20,7 @@ namespace Application.Catalogs.CatalogItems.UriComposer
         }
         public string ComposeImageUri(string src)
         {
-            return _domain + src;
+            return _domain + src.Replace("\\", "//");
         }
     }
 }

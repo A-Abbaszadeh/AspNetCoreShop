@@ -1,3 +1,4 @@
+using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.GetMenuItem;
@@ -78,7 +79,9 @@ namespace WebSite.EndPoint
             #region Application
             services.AddTransient<IGetMenuItemService, GetMenuItemService>();
             services.AddTransient<IGetCatalogItemPLPService, GetCatalogItemPLPService>();
-            services.AddTransient<IUriComposerService>(x => new UriComposerService(Configuration["Domain"]));
+            services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPService>();
+            var imageServerDomain = Configuration["Domain"];
+            services.AddTransient<IUriComposerService>(x => new UriComposerService(imageServerDomain));
             #endregion
 
         }
