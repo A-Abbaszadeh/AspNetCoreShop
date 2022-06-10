@@ -14,6 +14,8 @@ namespace Application.Baskets
     {
         BasketDto GetOrCreateBasketForUser(string buyerId);
         void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1);
+        bool RemoveItemFromBasket(int itemId);
+        bool SetQuantities(int itemId, int quantity);
     }
     public class BasketService : IBasketService
     {
@@ -83,6 +85,21 @@ namespace Application.Baskets
             _context.SaveChanges();
         }
 
+        public bool RemoveItemFromBasket(int itemId)
+        {
+            var item = _context.BasketItems.Find(itemId);
+            _context.BasketItems.Remove(item);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool SetQuantities(int itemId, int quantity)
+        {
+            var item = _context.BasketItems.Find(itemId);
+            item.SetQuantity(quantity);
+            _context.SaveChanges();
+            return true;
+        }
     }
     public class BasketDto
     {

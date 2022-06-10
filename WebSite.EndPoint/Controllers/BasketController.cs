@@ -33,6 +33,19 @@ namespace WebSite.EndPoint.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public IActionResult RemoveItemFromBasket(int itemId)
+        {
+            _basketService.RemoveItemFromBasket(itemId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult SetQuantity(int itemId, int quantity)
+        {
+            return Json(_basketService.SetQuantities(itemId, quantity));
+        }
+
         private BasketDto GetOrSetBasket()
         {
             if (_signInManager.IsSignedIn(User))

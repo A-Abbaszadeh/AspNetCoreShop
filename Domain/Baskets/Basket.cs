@@ -47,13 +47,18 @@ namespace Domain.Baskets
         public BasketItem(int unitPrice, int quantity, int catalogItemId)
         {
             UnitPrice = unitPrice;
-            Quantity = quantity;
+            SetQuantity(quantity); //  -> Quantity = quantity;
             CatalogItemId = catalogItemId;
         }
 
         public void AddQuantity(int quantity)
         {
             Quantity += quantity;
+        }
+
+        public void SetQuantity(int quantity)
+        {
+            Quantity = quantity;
         }
     }
 }
