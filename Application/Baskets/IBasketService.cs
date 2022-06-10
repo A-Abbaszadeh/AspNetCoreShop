@@ -16,6 +16,7 @@ namespace Application.Baskets
         void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1);
         bool RemoveItemFromBasket(int itemId);
         bool SetQuantities(int itemId, int quantity);
+        BasketDto GetBasketForUser(string userId);
     }
     public class BasketService : IBasketService
     {
@@ -100,12 +101,48 @@ namespace Application.Baskets
             _context.SaveChanges();
             return true;
         }
+
+        public BasketDto GetBasketForUser(string userId)
+        {
+            var basket = _context.Baskets
+                .Include(b => b.Items)
+                .ThenInclude(i => i.CatalogItem)
+                .ThenInclude(ci => ci.CatalogItemImages)
+                .FirstOrDefault(b => b.BuyerId == userId);
+
+            if (basket is null)
+            {
+                return null;
+            }
+            return new BasketDto
+            {
+                Id = basket.Id,
+                BuyerId = basket.BuyerId,
+                Items = basket.Items.Select(item => new BasketItemDto
+                {
+                    Id = item.Id,
+                    CatalogItemId = item.CatalogItemId,
+                    CatalogName = item.CatalogItem.Name,
+                    UnitPrice = item.UnitPrice,
+                    Quantity = item.Quantity,
+                    ImageUrl = _uriComposerService.ComposeImageUri(item?.CatalogItem?.CatalogItemImages?.FirstOrDefault()?.Src ?? "")
+                }).ToList()
+            };
+        }
     }
     public class BasketDto
     {
         public int Id { get; set; }
         public string BuyerId { get; set; }
         public List<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
+        public int TotalPrice()
+        {
+            if (Items.Any())
+            {
+                return Items.Sum(p => p.UnitPrice * p.Quantity);
+            }
+            return 0;
+        }
 
     }
     public class BasketItemDto
