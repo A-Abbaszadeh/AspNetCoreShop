@@ -4,6 +4,7 @@ using Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.GetMenuItem;
 using Application.Interfaces.Contexts;
+using Application.Users;
 using Application.Visitors.OnlineVisitors;
 using Application.Visitors.SaveVisitorInfo;
 using Infrastructure.IdentityConfigs;
@@ -73,8 +74,9 @@ namespace WebSite.EndPoint
             services.AddScoped<SaveVisitorFilter>();
             #endregion
 
-            #region Mapper
+            #region AutoMapper
             services.AddAutoMapper(typeof(CatalogMappingProfile));
+            services.AddAutoMapper(typeof(UserMappingProfile));
             #endregion
 
             #region Application
@@ -84,6 +86,7 @@ namespace WebSite.EndPoint
             var imageServerDomain = Configuration["Domain"];
             services.AddTransient<IUriComposerService>(x => new UriComposerService(imageServerDomain));
             services.AddTransient<IBasketService, BasketService>();
+            services.AddTransient<IUserAddressService, UserAddressService>();
             #endregion
 
         }
@@ -114,6 +117,11 @@ namespace WebSite.EndPoint
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

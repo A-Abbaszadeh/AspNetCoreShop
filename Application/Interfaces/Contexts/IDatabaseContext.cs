@@ -19,6 +19,7 @@ namespace Application.Interfaces.Contexts
         DbSet<CatalogItem> CatalogItems { get; set; }
         DbSet<Basket> Baskets { get; set; }
         DbSet<BasketItem> BasketItems { get; set; }
+        DbSet<UserAddress> UserAddresses { get; set; }
         #endregion
 
         #region Signatures Method Of EF Core
