@@ -1,7 +1,7 @@
 using Application.Baskets;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPLP;
-using Application.Catalogs.CatalogItems.UriComposer;
+using Application.UriComposer;
 using Application.Catalogs.GetMenuItem;
 using Application.Interfaces.Contexts;
 using Application.Users;
@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using WebSite.EndPoint.Hubs;
 using WebSite.EndPoint.Utilities.Filters;
 using WebSite.EndPoint.Utilities.Middlewares;
+using Application.Orders;
 
 namespace WebSite.EndPoint
 {
@@ -87,6 +88,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IUriComposerService>(x => new UriComposerService(imageServerDomain));
             services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<IUserAddressService, UserAddressService>();
+            services.AddTransient<IOrderService, OrderService>();
             #endregion
 
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Catalogs.CatalogItems.UriComposer
+namespace Application.UriComposer
 {
     public interface IUriComposerService
     {

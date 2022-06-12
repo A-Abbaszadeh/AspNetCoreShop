@@ -1,4 +1,4 @@
-﻿using Application.Catalogs.CatalogItems.UriComposer;
+﻿using Application.UriComposer;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
