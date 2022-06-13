@@ -30,7 +30,13 @@ namespace Domain.Orders
         public Order()  // for EF Core
         {
         }
+
+        public int TotalPrice()
+        {
+            return _orderItems.Sum(oi => oi.UnitPrice * oi.Units);
+        }
     }
+
     [Auditable]
     public class OrderItem
     {

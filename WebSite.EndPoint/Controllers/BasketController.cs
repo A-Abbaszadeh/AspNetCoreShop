@@ -1,5 +1,6 @@
 ﻿using Application.Baskets;
 using Application.Orders;
+using Application.Payments;
 using Application.Users;
 using Domain.Orders;
 using Domain.Users;
@@ -20,18 +21,21 @@ namespace WebSite.EndPoint.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IUserAddressService _userAddressService;
         private readonly IOrderService _orderService;
+        private readonly IPaymentService _paymentService;
         private string UserId = null;
 
         public BasketController(
             IBasketService basketService, 
             SignInManager<User> signInManager, 
             IUserAddressService userAddressService,
-            IOrderService orderService)
+            IOrderService orderService,
+            IPaymentService paymentService)
         {
             _basketService = basketService;
             _signInManager = signInManager;
             _userAddressService = userAddressService;
             _orderService = orderService;
+            _paymentService = paymentService;
         }
 
         [AllowAnonymous]
@@ -85,9 +89,9 @@ namespace WebSite.EndPoint.Controllers
             if (PaymentMethod == PaymentMethod.OnlinePayment)
             {
                 // ثیت درخواست
-
+                var payment = _paymentService.PayForOrder(orderId);
                 // ارسال به درگاه پرداخت
-                return View();
+                return RedirectToAction("Index", "Pay", new { PaymentId = payment.PaymentId });
             }
             else
             {

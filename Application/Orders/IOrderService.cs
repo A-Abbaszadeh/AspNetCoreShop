@@ -21,10 +21,11 @@ namespace Application.Orders
         private readonly IDatabaseContext _context;
         private readonly IMapper _mapper;
         private readonly IUriComposerService _uriComposerService;
-        public OrderService(IDatabaseContext context, IMapper mapper)
+        public OrderService(IDatabaseContext context, IMapper mapper, IUriComposerService uriComposerService)
         {
             _context = context;
             _mapper = mapper;
+            _uriComposerService = uriComposerService;
         }
 
         public int CreateOrder(int basketId, int userAddressId, PaymentMethod paymentMethod)
@@ -37,7 +38,7 @@ namespace Application.Orders
 
             var orderItems = basket.Items.Select(basketItem =>
             {
-                var catalogItem = catalogItems.First(ci => ci.Id == basketItem.Id);
+                var catalogItem = catalogItems.First(ci => ci.Id == basketItem.CatalogItemId);
                 var pictureUri = _uriComposerService.ComposeImageUri(catalogItem?.CatalogItemImages?.FirstOrDefault()?.Src ?? "");
                 var orderItem = new OrderItem(catalogItem.Id, catalogItem.Name, pictureUri, catalogItem.Price, basketItem.Quantity);
 

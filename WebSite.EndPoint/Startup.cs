@@ -26,6 +26,7 @@ using WebSite.EndPoint.Hubs;
 using WebSite.EndPoint.Utilities.Filters;
 using WebSite.EndPoint.Utilities.Middlewares;
 using Application.Orders;
+using Application.Payments;
 
 namespace WebSite.EndPoint
 {
@@ -54,6 +55,7 @@ namespace WebSite.EndPoint
 
             #region Identity and Security
             services.AddIdentityService(Configuration);
+            services.AddTransient<IIdentityDatabaseContext, IdentityDatabaseContext>();
 
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>
@@ -89,6 +91,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<IUserAddressService, UserAddressService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPaymentService, PaymentService>();
             #endregion
 
         }

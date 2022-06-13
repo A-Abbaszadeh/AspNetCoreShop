@@ -1,6 +1,7 @@
 ﻿using Domain.Baskets;
 using Domain.Catalogs;
 using Domain.Orders;
+using Domain.Payments;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,7 @@ namespace Application.Interfaces.Contexts
         DbSet<UserAddress> UserAddresses { get; set; }
         DbSet<Order> Orders { get; set; }
         DbSet<OrderItem> OrderItems { get; set; }
+        DbSet<Payment> Payments { get; set; }
         #endregion
 
         #region Signatures Method Of EF Core
