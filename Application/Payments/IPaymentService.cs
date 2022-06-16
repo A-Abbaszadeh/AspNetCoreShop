@@ -14,6 +14,7 @@ namespace Application.Payments
     {
         PaymentOfOrderDto PayForOrder(int orderId);
         PaymentDto GetPayment(Guid id);
+        bool VerifyPayment(Guid id, string Authority, long RefId);
     }
     public class PaymentService : IPaymentService
     {
@@ -70,6 +71,18 @@ namespace Application.Payments
                 Amount = payment.Amount,
                 PaymentMethod = order.PaymentMethod,
             };
+        }
+
+        public bool VerifyPayment(Guid id, string Authority, long RefId)
+        {
+            var payment = _context.Payments.Include(p => p.Order).SingleOrDefault(p => p.Id == id);
+            if (payment is null) throw new Exception("Payment Not Found");
+
+            payment.Order.PaymentDone();
+            payment.PaymentIsDone(Authority, RefId);
+
+            _context.SaveChanges();
+            return true;
         }
     }
     public class PaymentOfOrderDto

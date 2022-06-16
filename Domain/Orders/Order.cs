@@ -35,6 +35,38 @@ namespace Domain.Orders
         {
             return _orderItems.Sum(oi => oi.UnitPrice * oi.Units);
         }
+
+        /// <summary>
+        /// پرداخت با موفقیت انجام شد
+        /// </summary>
+        public void PaymentDone()
+        {
+            PaymentStatus = PaymentStatus.Paid;
+        }
+
+        /// <summary>
+        /// سفارش تحویل داده شد
+        /// </summary>
+        public void OrderDeliverd()
+        {
+            OrderStatus = OrderStatus.Delivered;
+        }
+
+        /// <summary>
+        /// سفارش مرجوع شد
+        /// </summary>
+        public void OrderReturned()
+        {
+            OrderStatus = OrderStatus.Returned;
+        }
+
+        /// <summary>
+        /// سفارش لغو شد
+        /// </summary>
+        public void OrderCancelled()
+        {
+            OrderStatus = OrderStatus.Cancelled;
+        }
     }
 
     [Auditable]

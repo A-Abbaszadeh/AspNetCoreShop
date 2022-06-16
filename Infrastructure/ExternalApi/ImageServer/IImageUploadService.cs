@@ -37,9 +37,7 @@ namespace Infrastructure.ExternalApi.ImageServer
                 }
                 request.AddFile(file.FileName, bytes, file.FileName, file.ContentType);
             }
-            //request.AddFile("file1", "/C:/Users/Abbas-PC/Desktop/Screenshot 2022-05-29 011429.jpg");
-            //request.AddFile("filename2", "/C:/Users/Abbas-PC/Desktop/logo-light.png");
-            //RestResponse response = await client.ExecuteAsync(request);
+
             var response = client.ExecuteAsync(request);
             UploadDto upload = JsonConvert.DeserializeObject<UploadDto>(response.Result.Content);
 

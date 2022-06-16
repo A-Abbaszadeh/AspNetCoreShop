@@ -2,7 +2,11 @@
 using Dto.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WebSite.EndPoint.Utilities;
 using ZarinPal.Class;
@@ -56,9 +60,53 @@ namespace WebSite.EndPoint.Controllers
             return Redirect($"https://sandbox.zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
         }
 
-        public IActionResult Verify()
+        public IActionResult Verify(Guid Id, string Authority)
         {
+            string status = HttpContext.Request.Query["Status"];
+            if (status != "" && status.ToString().ToLower() == "ok" && Authority != "")
+            {
+                var payment = _paymentService.GetPayment(Id);
+                if (payment is null)
+                {
+                    return NotFound();
+                }
+                var verification = _payment.Verification(new DtoVerification
+                {
+                    Amount = payment.Amount,
+                    Authority = Authority,
+                    MerchantId = merchendId
+                }, Payment.Mode.sandbox).Result;
+
+                if (verification.Status == 100)
+                {
+                    var verifyResult = _paymentService.VerifyPayment(Id, Authority, verification.RefId);
+                    if (verifyResult)
+                    {
+                        return Redirect("/customers/orders");
+                    }
+                    else
+                    {
+                        TempData["message"] = "پرداخت انجام شد اما به دلایلی ثبت نگردید";
+                        return RedirectToAction("checkout", "basket");
+                    }
+                }
+                else
+                {
+                    TempData["message"] = "پرداخت شما ناموفق بوده است . لطفا مجددا تلاش نمایید یا در صورت بروز مشکل با مدیریت سایت تماس بگیرید .";
+                    return RedirectToAction("checkout", "basket");
+                }
+
+                TempData["message"] = "پرداخت شما ناموفق بوده است";
+                return RedirectToAction("checkout", "basket");
+            }
             return View();
         }
     }
+
+    public class VerificationPayResultDto
+    {
+        public int Status { get; set; }
+        public long RefID { get; set; }
+    }
+
 }
