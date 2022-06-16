@@ -2,11 +2,7 @@
 using Dto.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using WebSite.EndPoint.Utilities;
 using ZarinPal.Class;
