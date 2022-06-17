@@ -2,6 +2,7 @@ using Admin.EndPoint.MappingProfiles;
 using Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Catalogs.CatalogTypes;
+using Application.Discounts;
 using Application.Discounts.AddNewDiscountService;
 using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
@@ -39,6 +40,7 @@ namespace Admin.EndPoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddControllers();
 
             #region Sql Server
             string connectionString = Configuration["ConnectionStrings:SqlServer"];
@@ -76,6 +78,7 @@ namespace Admin.EndPoint
             services.AddTransient<ICatalogItemService, CatalogItemService>();
             services.AddTransient<IImageUploadService, ImageUploadService>();
             services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
+            services.AddTransient<IDiscountService, DiscountService>();
             #endregion
 
             #region Fluent validation
@@ -109,6 +112,7 @@ namespace Admin.EndPoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
