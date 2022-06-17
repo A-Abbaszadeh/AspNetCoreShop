@@ -2,6 +2,7 @@
 using Domain.Catalogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,7 @@ namespace Domain.Discounts
 
     public enum DiscountType
     {
+        [Display(Name = "تخفیف برای محصولات")]
         AssignedToProduct = 1,
         //AssignedToCategories = 2,
         //AssignedToUser = 3,
@@ -52,14 +54,17 @@ namespace Domain.Discounts
         /// <summary>
         /// بدون محدودیت
         /// </summary>
+        [Display(Name = "بدون محدودیت")]
         Unlimited = 0,
         /// <summary>
         /// N بار
         /// </summary>
+        [Display(Name = "N بار")]
         NTimesOnly = 1,
         /// <summary>
         /// N بار به ازای هر مشتری
         /// </summary>
+        [Display(Name = "N بار به ازای هر مشتری")]
         NTimesPerCustomer = 2,
     }
 }

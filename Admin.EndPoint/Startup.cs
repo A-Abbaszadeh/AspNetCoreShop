@@ -2,6 +2,7 @@ using Admin.EndPoint.MappingProfiles;
 using Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Catalogs.CatalogTypes;
+using Application.Discounts.AddNewDiscountService;
 using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
 using Application.Visitors.OnlineVisitors;
@@ -74,6 +75,7 @@ namespace Admin.EndPoint
             services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemService>();
             services.AddTransient<ICatalogItemService, CatalogItemService>();
             services.AddTransient<IImageUploadService, ImageUploadService>();
+            services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
             #endregion
 
             #region Fluent validation
