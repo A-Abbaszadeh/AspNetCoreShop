@@ -74,24 +74,27 @@ namespace Persistence.Contexts
             {
                 var entityType = item.Context.Model.FindEntityType(item.Entity.GetType());
 
-                var inserted = entityType.FindProperty("InsertTime");
-                var updated = entityType.FindProperty("UpdateTime");
-                var removed = entityType.FindProperty("RemoveTime");
-                var isRemoved = entityType.FindProperty("IsRemoved");
+                if (entityType is not null)
+                {
+                    var inserted = entityType.FindProperty("InsertTime");
+                    var updated = entityType.FindProperty("UpdateTime");
+                    var removed = entityType.FindProperty("RemoveTime");
+                    var isRemoved = entityType.FindProperty("IsRemoved");
 
-                if (item.State == EntityState.Added && inserted is not null)
-                {
-                    item.Property("InsertTime").CurrentValue = DateTime.Now;
-                }
-                else if (item.State == EntityState.Modified && updated is not null)
-                {
-                    item.Property("UpdateTime").CurrentValue = DateTime.Now;
-                }
-                else if (item.State == EntityState.Deleted && removed is not null && isRemoved is not null)
-                {
-                    item.Property("RemoveTime").CurrentValue = DateTime.Now;
-                    item.Property("IsRemoved").CurrentValue = true;
-                    item.State = EntityState.Modified;
+                    if (item.State == EntityState.Added && inserted is not null)
+                    {
+                        item.Property("InsertTime").CurrentValue = DateTime.Now;
+                    }
+                    else if (item.State == EntityState.Modified && updated is not null)
+                    {
+                        item.Property("UpdateTime").CurrentValue = DateTime.Now;
+                    }
+                    else if (item.State == EntityState.Deleted && removed is not null && isRemoved is not null)
+                    {
+                        item.Property("RemoveTime").CurrentValue = DateTime.Now;
+                        item.Property("IsRemoved").CurrentValue = true;
+                        item.State = EntityState.Modified;
+                    }
                 }
             }
             return base.SaveChanges();

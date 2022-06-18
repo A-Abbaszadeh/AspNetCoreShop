@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MD.PersianDateTime.Standard" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

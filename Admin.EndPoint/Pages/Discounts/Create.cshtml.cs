@@ -1,3 +1,4 @@
+using Admin.EndPoint.Binders;
 using Application.Discounts.AddNewDiscountService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +13,8 @@ namespace Admin.EndPoint.Pages.Discounts
         {
             _addNewDiscountService = addNewDiscountService;
         }
+        [ModelBinder(BinderType = typeof(DiscountEntityBinder))]
+        [BindProperty]
         public AddNewDiscountDto Model { get; set; }
         public void OnGet()
         {
