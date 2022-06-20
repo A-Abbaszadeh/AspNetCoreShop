@@ -1,4 +1,5 @@
 ﻿using Application.Baskets;
+using Application.Discounts;
 using Application.Orders;
 using Application.Payments;
 using Application.Users;
@@ -22,6 +23,7 @@ namespace WebSite.EndPoint.Controllers
         private readonly IUserAddressService _userAddressService;
         private readonly IOrderService _orderService;
         private readonly IPaymentService _paymentService;
+        private readonly IDiscountService _discountService;
         private string UserId = null;
 
         public BasketController(
@@ -29,13 +31,15 @@ namespace WebSite.EndPoint.Controllers
             SignInManager<User> signInManager, 
             IUserAddressService userAddressService,
             IOrderService orderService,
-            IPaymentService paymentService)
+            IPaymentService paymentService,
+            IDiscountService discountService)
         {
             _basketService = basketService;
             _signInManager = signInManager;
             _userAddressService = userAddressService;
             _orderService = orderService;
             _paymentService = paymentService;
+            _discountService = discountService;
         }
 
         [AllowAnonymous]
@@ -99,6 +103,21 @@ namespace WebSite.EndPoint.Controllers
 
                 return RedirectToAction("Index", "Orders", new { area = "customers" });
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ApplyDiscount(string couponCode, int basketId)
+        {
+            _discountService.ApplyDiscountInBasket(couponCode, basketId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [AllowAnonymous]
+        public IActionResult RemoveDiscount(int id)
+        {
+            _discountService.RemoveDiscountFromBasket(id);
+            return RedirectToAction(nameof(Index));
         }
 
         private BasketDto GetOrSetBasket()

@@ -30,7 +30,7 @@ namespace Application.Orders
 
         public int CreateOrder(int basketId, int userAddressId, PaymentMethod paymentMethod)
         {
-            var basket = _context.Baskets.Include(b => b.Items).SingleOrDefault(b => b.Id == basketId);
+            var basket = _context.Baskets.Include(b => b.Items).Include(b => b.AppliedDiscount).SingleOrDefault(b => b.Id == basketId);
 
             int[] Ids = basket.Items.Select(b => b.CatalogItemId).ToArray();
 
@@ -49,7 +49,7 @@ namespace Application.Orders
 
             var address = _mapper.Map<Address>(userAddress);
 
-            var Order = new Order(basket.BuyerId, address, paymentMethod, orderItems);
+            var Order = new Order(basket.BuyerId, address, paymentMethod, orderItems, basket.AppliedDiscount);
 
             _context.Orders.Add(Order);
             _context.Baskets.Remove(basket);

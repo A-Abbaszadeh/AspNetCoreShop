@@ -1,4 +1,5 @@
 ﻿using Domain.Attributes;
+using Domain.Discounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +20,52 @@ namespace Domain.Orders
         public OrderStatus OrderStatus { get; private set; }
         private readonly List<OrderItem> _orderItems = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
-        public Order(string userId, Address address, PaymentMethod paymentMethod, List<OrderItem> orderItems)
+
+        public decimal DiscountAmount { get; private set; }
+        public Discount AppliedDiscount { get; private set; }
+        public int? AppliedDiscountId { get;  private set; }
+
+        public Order(string userId, Address address, PaymentMethod paymentMethod, List<OrderItem> orderItems, Discount discount)
         {
             UserId = userId;
             Address = address;
             PaymentMethod = paymentMethod;
             _orderItems = orderItems;
+            if (discount is not null)
+            {
+                ApplyDiscountCode(discount);
+            }
         }
 
         public Order()  // for EF Core
         {
         }
 
+        /// <summary>
+        /// مبلغ کل با تخفیف
+        /// </summary>
+        /// <returns></returns>
         public int TotalPrice()
         {
-            return _orderItems.Sum(oi => oi.UnitPrice * oi.Units);
+            int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
+            totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
+            return totalPrice;
+        }
+        /// <summary>
+        /// مبلغ کل بدون تخفیف
+        /// </summary>
+        /// <returns></returns>
+        public int TotalPriceWithoutDiscount()
+        {
+            int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
+            return totalPrice;
+        }
+
+        public void ApplyDiscountCode(Discount discount)
+        {
+            AppliedDiscount = discount;
+            AppliedDiscountId = discount.Id;
+            DiscountAmount = discount.GetDiscountAmount(TotalPrice());
         }
 
         /// <summary>

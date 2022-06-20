@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Contexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Application.Discounts
     public interface IDiscountService
     {
         List<CatalogItemDto> GetCatalogItems(string searchKey);
+        bool ApplyDiscountInBasket(string couponCode, int basketId);
+        bool RemoveDiscountFromBasket(int basketId);
     }
 
     public class DiscountService : IDiscountService
@@ -20,6 +23,8 @@ namespace Application.Discounts
         {
             _context = context;
         }
+
+
         public List<CatalogItemDto> GetCatalogItems(string searchKey)
         {
             if (!String.IsNullOrEmpty(searchKey))
@@ -46,6 +51,25 @@ namespace Application.Discounts
                     }).ToList();
                 return data;
             }
+        }
+
+        public bool ApplyDiscountInBasket(string couponCode, int basketId)
+        {
+            var basket = _context.Baskets.Include(b => b.Items).Include(b => b.AppliedDiscount)
+                .FirstOrDefault(b => b.Id == basketId);
+
+            var discount = _context.Discounts.Where(b => b.CouponCode.Equals(couponCode)).FirstOrDefault();
+
+            basket.ApplyDiscountCode(discount);
+            _context.SaveChanges();
+            return true;
+        }
+        public bool RemoveDiscountFromBasket(int basketId)
+        {
+            var basket = _context.Baskets.Find(basketId);
+            basket.RemoveDiscount();
+            _context.SaveChanges();
+            return true;
         }
     }
 

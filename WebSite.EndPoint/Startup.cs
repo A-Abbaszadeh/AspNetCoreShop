@@ -27,6 +27,7 @@ using WebSite.EndPoint.Utilities.Filters;
 using WebSite.EndPoint.Utilities.Middlewares;
 using Application.Orders;
 using Application.Payments;
+using Application.Discounts;
 
 namespace WebSite.EndPoint
 {
@@ -92,6 +93,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IUserAddressService, UserAddressService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IDiscountService, DiscountService>();
             #endregion
 
         }

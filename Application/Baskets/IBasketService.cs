@@ -45,6 +45,7 @@ namespace Application.Baskets
             {
                 Id = basket.Id,
                 BuyerId = basket.BuyerId,
+                DiscountAmount = basket.DiscountAmount,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     Id = item.Id,
@@ -119,6 +120,7 @@ namespace Application.Baskets
             {
                 Id = basket.Id,
                 BuyerId = basket.BuyerId,
+                DiscountAmount = basket.DiscountAmount,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     Id = item.Id,
@@ -133,7 +135,8 @@ namespace Application.Baskets
 
         public void TransferBasket(string anonymousId, string userId)
         {
-            var anonymousBasket = _context.Baskets.SingleOrDefault(b => b.BuyerId == anonymousId);
+            var anonymousBasket = _context.Baskets
+                .Include(b => b.Items).Include(b => b.AppliedDiscount).SingleOrDefault(b => b.BuyerId == anonymousId);
             if (anonymousBasket is null) return;
 
             var userBasket = _context.Baskets.SingleOrDefault(b => b.BuyerId == userId);
@@ -147,6 +150,11 @@ namespace Application.Baskets
             {
                 userBasket.AddItem(item.UnitPrice, item.Quantity, item.CatalogItemId);
             }
+
+            if (anonymousBasket.AppliedDiscount is not null)
+            {
+                userBasket.ApplyDiscountCode(anonymousBasket.AppliedDiscount);
+            }
             _context.Baskets.Remove(anonymousBasket);
 
             _context.SaveChanges();
@@ -157,11 +165,24 @@ namespace Application.Baskets
         public int Id { get; set; }
         public string BuyerId { get; set; }
         public List<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
+        public int DiscountAmount { get; set; }
         public int TotalPrice()
         {
             if (Items.Any())
             {
-                return Items.Sum(p => p.UnitPrice * p.Quantity);
+                int total = Items.Sum(p => p.UnitPrice * p.Quantity);
+                total -= DiscountAmount;
+                return total;
+            }
+            return 0;
+        }
+
+        public int TotalPriceWithoutDiscount()
+        {
+            if (Items.Any())
+            {
+                int total = Items.Sum(p => p.UnitPrice * p.Quantity);
+                return total;
             }
             return 0;
         }

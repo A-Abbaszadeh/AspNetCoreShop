@@ -30,6 +30,7 @@ namespace Application.Payments
         {
             var payment = _context.Payments
                 .Include(p => p.Order).ThenInclude(p => p.OrderItems)
+                .Include(p => p.Order).ThenInclude(p => p.AppliedDiscount)
                 .SingleOrDefault(p => p.Id == id);
 
             var user = _identityContext.Users.SingleOrDefault(u => u.Id == payment.Order.UserId);
@@ -54,7 +55,9 @@ namespace Application.Payments
 
         public PaymentOfOrderDto PayForOrder(int orderId)
         {
-            var order = _context.Orders.Include(o => o.OrderItems).SingleOrDefault(o => o.Id == orderId);
+            var order = _context.Orders
+                .Include(o => o.OrderItems).Include(o => o.AppliedDiscount).SingleOrDefault(o => o.Id == orderId);
+
             if (order is null) throw new Exception("");
 
             var payment = _context.Payments.SingleOrDefault(p => p.OrderId == order.Id);
