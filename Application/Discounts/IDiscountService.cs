@@ -1,4 +1,7 @@
-﻿using Application.Interfaces.Contexts;
+﻿using Application.Dtos;
+using Application.Interfaces.Contexts;
+using Domain.Discounts;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,17 +16,19 @@ namespace Application.Discounts
         List<CatalogItemDto> GetCatalogItems(string searchKey);
         bool ApplyDiscountInBasket(string couponCode, int basketId);
         bool RemoveDiscountFromBasket(int basketId);
+        BaseDto IsDiscountValid(string couponCode, User user);
     }
 
     public class DiscountService : IDiscountService
     {
         private readonly IDatabaseContext _context;
+        private readonly IDiscountHistoryService _discountHistoryService;
 
-        public DiscountService(IDatabaseContext context)
+        public DiscountService(IDatabaseContext context, IDiscountHistoryService discountHistoryService)
         {
             _context = context;
+            _discountHistoryService = discountHistoryService;
         }
-
 
         public List<CatalogItemDto> GetCatalogItems(string searchKey)
         {
@@ -70,6 +75,78 @@ namespace Application.Discounts
             basket.RemoveDiscount();
             _context.SaveChanges();
             return true;
+        }
+
+        public BaseDto IsDiscountValid(string couponCode, User user)
+        {
+            var discount = _context.Discounts.Where(d => d.CouponCode.Equals(couponCode)).FirstOrDefault();
+
+            if (discount is null) return new BaseDto(false, new List<string> { "کد تخفیف معتبر نیست" });
+
+            var now = DateTime.UtcNow;
+            if (discount.StartDate.HasValue)
+            {
+                var startDate = DateTime.SpecifyKind(discount.StartDate.Value, DateTimeKind.Utc);
+
+                if (startDate.CompareTo(now) > 0)
+                    return new BaseDto(false, new List<string> { "زمان استفاده از این تخفیف هنوز فرا نرسیده است" });
+            }
+
+            if (discount.EndDate.HasValue)
+            {
+                var endDate = DateTime.SpecifyKind(discount.EndDate.Value, DateTimeKind.Utc);
+
+                if (endDate.CompareTo(now) < 0)
+                    return new BaseDto(false, new List<string> { "کد تخفیف منقضی شده است" });
+
+            }
+
+            var checkLimit = CheckDiscountLimitations(discount, user);
+
+            if (checkLimit.IsSuccess) return checkLimit;
+
+            return new BaseDto(true, null);
+        }
+
+        private BaseDto CheckDiscountLimitations(Discount discount, User user)
+        {
+            switch (discount.DiscountLimitation)
+            {
+                case DiscountLimitationType.Unlimited:
+                    return new BaseDto(true, null);
+                case DiscountLimitationType.NTimesOnly:
+                    {
+                        var totalUsage = _discountHistoryService.GetAllDiscountUsageHistory(discount.Id, null, 0, 1).Data.Count();
+                        if (totalUsage < discount.LimitationTimes)
+                        {
+                            return new BaseDto(true, null);
+                        }
+                        else
+                        {
+                            return new BaseDto(false, new List<string> { "ظرفیت استفاده از این کد تخفیف تکمیل شده است" });
+                        }
+                    }
+                case DiscountLimitationType.NTimesPerCustomer:
+                    {
+                        if (user is not null)
+                        {
+                            var totalUsage = _discountHistoryService.GetAllDiscountUsageHistory(discount.Id, user.Id, 0, 1).Data.Count();
+                            if (totalUsage < discount.LimitationTimes)
+                            {
+                                return new BaseDto(true, null);
+                            }
+                            else
+                            {
+                                return new BaseDto(false, new List<string> { "ظرفیت استفاده از این کد تخفیف برای شما تکمیل شده است" });
+                            }
+                        }
+                        else
+                        {
+                            return new BaseDto(true, null);
+                        }
+                    }
+            }
+            return new BaseDto(true, null);
         }
     }
 

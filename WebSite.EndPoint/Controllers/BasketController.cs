@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using WebSite.EndPoint.Models.ViewModel.Baskets;
 using WebSite.EndPoint.Utilities;
 
@@ -24,6 +25,7 @@ namespace WebSite.EndPoint.Controllers
         private readonly IOrderService _orderService;
         private readonly IPaymentService _paymentService;
         private readonly IDiscountService _discountService;
+        private readonly UserManager<User> _userManager;
         private string UserId = null;
 
         public BasketController(
@@ -32,7 +34,8 @@ namespace WebSite.EndPoint.Controllers
             IUserAddressService userAddressService,
             IOrderService orderService,
             IPaymentService paymentService,
-            IDiscountService discountService)
+            IDiscountService discountService,
+            UserManager<User> userManager)
         {
             _basketService = basketService;
             _signInManager = signInManager;
@@ -40,6 +43,7 @@ namespace WebSite.EndPoint.Controllers
             _orderService = orderService;
             _paymentService = paymentService;
             _discountService = discountService;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -109,7 +113,17 @@ namespace WebSite.EndPoint.Controllers
         [HttpPost]
         public IActionResult ApplyDiscount(string couponCode, int basketId)
         {
-            _discountService.ApplyDiscountInBasket(couponCode, basketId);
+            var user = _userManager.GetUserAsync(User).Result;
+            var validDiscount = _discountService.IsDiscountValid(couponCode, user);
+
+            if (validDiscount.IsSuccess)
+            {
+                _discountService.ApplyDiscountInBasket(couponCode, basketId);
+            }
+            else
+            {
+                TempData["InvalidMessage"] = String.Join(Environment.NewLine, validDiscount.Messages.Select(m => String.Join(",", m)));
+            }
             return RedirectToAction(nameof(Index));
         }
 
