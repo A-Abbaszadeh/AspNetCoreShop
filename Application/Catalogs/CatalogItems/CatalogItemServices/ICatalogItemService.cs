@@ -1,7 +1,9 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Contexts;
+using Application.UriComposer;
 using AutoMapper;
 using Common;
+using Domain.Catalogs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,16 +18,33 @@ namespace Application.Catalogs.CatalogItems.CatalogItemServices
         List<CatalogBrandDto> GetCatalogBrand();
         List<ListCatalogTypeDto> GetCatalogType();
         PaginatedItemDto<CatalogItemListDto> GetCatalogList(int page, int pageSize);
+        void AddToMyFavorite(string userId, int catalogItemId);
+        PaginatedItemDto<FavoriteCatalogItemDto> GetMyFavorite(string userId, int page = 1, int pageSize = 20);
     }
 
     public class CatalogItemService : ICatalogItemService
     {
         private readonly IDatabaseContext _context;
         private readonly IMapper _mapper;
-        public CatalogItemService(IDatabaseContext context, IMapper mapper)
+        private readonly IUriComposerService _uriComposerService;
+
+        public CatalogItemService(IDatabaseContext context, IMapper mapper, IUriComposerService uriComposerService)
         {
             _context = context;
             _mapper = mapper;
+            _uriComposerService = uriComposerService;
+        }
+
+        public void AddToMyFavorite(string userId, int catalogItemId)
+        {
+            var catalogItem = _context.CatalogItems.Find(catalogItemId);
+            CatalogItemFavorite catalogItemFavorite = new CatalogItemFavorite()
+            {
+                CatalogItem = catalogItem,
+                UserId = userId,
+            };
+            _context.CatalogItemFavorites.Add(catalogItemFavorite);
+            _context.SaveChanges();
         }
 
         public List<CatalogBrandDto> GetCatalogBrand()
@@ -75,6 +94,28 @@ namespace Application.Catalogs.CatalogItems.CatalogItemServices
 
             return types;
         }
+
+        public PaginatedItemDto<FavoriteCatalogItemDto> GetMyFavorite(string userId, int page = 1, int pageSize = 20)
+        {
+            var model = _context.CatalogItems
+                .Include(ci => ci.CatalogItemFavorites).Include(ci => ci.Discounts).Include(ci => ci.CatalogItemImages)
+                .Where(ci => ci.CatalogItemFavorites.Any(f => f.UserId == userId))
+                .OrderBy(ci => ci.Id).AsQueryable();
+
+            int rowCount = 0;
+            var data = model.PagedResult(page, pageSize, out rowCount).ToList()
+                .Select(f => new FavoriteCatalogItemDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Price = f.Price,
+                    Rate = 4,
+                    AvailableStock = f.AvailableStock,
+                    Image = _uriComposerService.ComposeImageUri(f?.CatalogItemImages?.FirstOrDefault()?.Src ?? "")
+                }).ToList();
+
+            return new PaginatedItemDto<FavoriteCatalogItemDto>(page, pageSize, rowCount, data);
+        }
     }
 
     public class CatalogBrandDto
@@ -87,7 +128,6 @@ namespace Application.Catalogs.CatalogItems.CatalogItemServices
         public int Id { get; set; }
         public string Type { get; set; }
     }
-
     public class CatalogItemListDto
     {
         public int Id { get; set; }
@@ -98,5 +138,14 @@ namespace Application.Catalogs.CatalogItems.CatalogItemServices
         public int AvailableStock { get; set; }
         public int RestockThreshold { get; set; }
         public int MaxStockThreshold { get; set; }
+    }
+    public class FavoriteCatalogItemDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public int Rate { get; set; }
+        public int AvailableStock { get; set; }
+        public string Image { get; set; }
     }
 }

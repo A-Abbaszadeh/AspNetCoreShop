@@ -36,6 +36,7 @@ namespace Persistence.Contexts
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
+        public DbSet<CatalogItemFavorite> CatalogItemFavorites { get; set; }
         #endregion
 
 

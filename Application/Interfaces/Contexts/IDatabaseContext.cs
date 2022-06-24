@@ -28,6 +28,7 @@ namespace Application.Interfaces.Contexts
         DbSet<Payment> Payments { get; set; }
         DbSet<Discount> Discounts { get; set; }
         DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
+        DbSet<CatalogItemFavorite> CatalogItemFavorites { get; set; }
         #endregion
 
         #region Signatures Method Of EF Core

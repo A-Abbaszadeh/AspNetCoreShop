@@ -28,6 +28,7 @@ using WebSite.EndPoint.Utilities.Middlewares;
 using Application.Orders;
 using Application.Payments;
 using Application.Discounts;
+using Application.Catalogs.CatalogItems.CatalogItemServices;
 
 namespace WebSite.EndPoint
 {
@@ -95,6 +96,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IPaymentService, PaymentService>();
             services.AddTransient<IDiscountService, DiscountService>();
             services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
+            services.AddTransient<ICatalogItemService, CatalogItemService>();
             #endregion
 
         }
