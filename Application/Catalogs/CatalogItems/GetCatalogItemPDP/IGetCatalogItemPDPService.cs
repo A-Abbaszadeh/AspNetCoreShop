@@ -29,6 +29,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
             var catalogItem = _context.CatalogItems
                 .Include(p => p.CatalogType)
                 .Include(p => p.CatalogBrand)
+                .Include(p => p.Discounts)
                 .Include(p => p.CatalogItemImages)
                 .Include(p => p.CatalogItemFeatures)
                 .SingleOrDefault(p => p.Id == id);
@@ -60,6 +61,8 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 Type = catalogItem.CatalogType.Type,
                 Brand = catalogItem.CatalogBrand.Brand,
                 Price = catalogItem.Price,
+                OldPrice = catalogItem.OldPrice,
+                PercentDiscount = catalogItem.PercentDiscount,
                 Description = catalogItem.Description,
                 Images = catalogItem.CatalogItemImages.Select(p => _uriComposerService.ComposeImageUri(p.Src)).ToList(),
                 Features = features,
@@ -74,7 +77,11 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
         public string Name { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
+
         public int Price { get; set; }
+        public int? OldPrice { get; set; }
+        public int? PercentDiscount { get; set; }
+
         public string Description { get; set; }
         public List<string> Images { get; set; }
         public IEnumerable<IGrouping<string, PDPFeaturesDto>> Features { get; set; }

@@ -32,9 +32,8 @@ namespace Application.Baskets
         public BasketDto GetOrCreateBasketForUser(string buyerId)
         {
             var basket = _context.Baskets
-                .Include(b => b.Items)
-                .ThenInclude(i => i.CatalogItem)
-                .ThenInclude(ci => ci.CatalogItemImages)
+                .Include(b => b.Items).ThenInclude(i => i.CatalogItem).ThenInclude(ci => ci.CatalogItemImages)
+                .Include(b => b.Items).ThenInclude(i => i.CatalogItem).ThenInclude(ci => ci.Discounts)
                 .FirstOrDefault(b => b.BuyerId == buyerId);
 
             if (basket is null)
@@ -51,7 +50,7 @@ namespace Application.Baskets
                     Id = item.Id,
                     CatalogItemId = item.CatalogItemId,
                     CatalogName = item.CatalogItem.Name,
-                    UnitPrice = item.UnitPrice,
+                    UnitPrice = item.CatalogItem.Price,
                     Quantity = item.Quantity,
                     ImageUrl = _uriComposerService.ComposeImageUri(item?.CatalogItem?.CatalogItemImages?.FirstOrDefault()?.Src ?? "")
                 }).ToList()

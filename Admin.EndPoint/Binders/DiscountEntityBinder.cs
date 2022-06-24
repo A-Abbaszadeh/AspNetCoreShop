@@ -53,8 +53,8 @@ namespace Admin.EndPoint.Binders
                     .GetValue($"{fieldName}.{nameof(discountDto.DiscountLimitationId)}").Values.ToString()),
             };
 
-            var appliedToCatalogItem = bindingContext.ValueProvider.GetValue($"{fieldName}.{discountDto.AppliedToCatalogItem}");
-
+            var appliedToCatalogItem = bindingContext.ValueProvider.GetValue($"{fieldName}.{nameof(discountDto.AppliedToCatalogItem)}");
+            
             if (!string.IsNullOrEmpty(appliedToCatalogItem.Values))
             {
                 discountDto.AppliedToCatalogItem = appliedToCatalogItem.Values.ToString().Split(',').Select(a => Int32.Parse(a)).ToList();

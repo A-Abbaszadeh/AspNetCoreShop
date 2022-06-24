@@ -79,6 +79,7 @@ namespace Admin.EndPoint
             services.AddTransient<IImageUploadService, ImageUploadService>();
             services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
             services.AddTransient<IDiscountService, DiscountService>();
+            services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
             #endregion
 
             #region Fluent validation
