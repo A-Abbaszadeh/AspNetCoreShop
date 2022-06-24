@@ -34,6 +34,9 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 .Include(p => p.CatalogItemFeatures)
                 .SingleOrDefault(p => p.Id == id);
 
+            catalogItem.VisitCount++;
+            _context.SaveChanges();
+
             var features = catalogItem.CatalogItemFeatures
                 .Select(p => new PDPFeaturesDto
                 {
