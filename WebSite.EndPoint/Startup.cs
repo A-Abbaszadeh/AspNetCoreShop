@@ -29,6 +29,7 @@ using Application.Orders;
 using Application.Payments;
 using Application.Discounts;
 using Application.Catalogs.CatalogItems.CatalogItemServices;
+using Application.Orders.CustormerOrderService;
 
 namespace WebSite.EndPoint
 {
@@ -97,6 +98,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IDiscountService, DiscountService>();
             services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
             services.AddTransient<ICatalogItemService, CatalogItemService>();
+            services.AddTransient<ICustormerOrderService, CustormerOrderService>();
             #endregion
 
         }

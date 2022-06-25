@@ -49,7 +49,10 @@ namespace Domain.Orders
         public int TotalPrice()
         {
             int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
-            totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
+            if (AppliedDiscount is not null)
+            {
+                totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
+            }
             return totalPrice;
         }
         /// <summary>
@@ -170,7 +173,7 @@ namespace Domain.Orders
         /// <summary>
         /// در حال پردازش
         /// </summary>
-        Proccessing = 0,
+        Processing = 0,
         /// <summary>
         /// تحویل داده شده
         /// </summary>
