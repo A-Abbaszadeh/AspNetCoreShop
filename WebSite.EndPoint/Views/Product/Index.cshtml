@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "لیست محصولات";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var availableStock = Context.Request.Query["AvailableStock"];
 }
 
 <div class="row mb-5" style="transform: none;">
@@ -15,88 +16,23 @@
                     <button class="btn-close-filter-sidebar"><i class="fal fa-times"></i></button>
                 </div>
             </div><div class="sidebar-widget">
-                <div class="widget widget-filter-options shadow-around">
-                    <div class="widget-title">برند</div>
-                    <div class="search-in-options form-element-row">
-                        <div class="form-element-with-icon">
-                            <input type="text" class="input-element" placeholder="جستجوی نام برند...">
-                            <i class="fad fa-file-search"></i>
+                
+                @await Component.InvokeAsync("BrandFilter")
+
+                <form asp-action="Index" method="get">
+                    <div class="widget shadow-around">
+                        <div class="widget-content">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="AvailableStock"  onclick="submit();" class="custom-control-input" id="customSwitch1" @(availableStock == "true" ? "checked value=false":"value=true")>
+                                <label class="custom-control-label" for="customSwitch1">
+                                    فقط کالاهای موجود در
+                                    انبار
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="widget-content">
-                        <label class="container-checkbox">
-                            سامسونگ
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            شیائومی
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            هوآوی
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            اپل
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            نوکیا
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            آنر
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            ال جی
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            ایسوس
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            سونی
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            گوگل
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            سونی اریکسون
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            جی ال ایکس
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="widget shadow-around">
-                    <div class="widget-content">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">
-                                فقط کالاهای موجود در
-                                انبار
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                </form>
+
                 <div class="widget shadow-around">
                     <div class="widget-content">
                         <div class="custom-control custom-switch">
