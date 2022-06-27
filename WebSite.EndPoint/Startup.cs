@@ -30,6 +30,7 @@ using Application.Payments;
 using Application.Discounts;
 using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Orders.CustormerOrderService;
+using Application.HomePages;
 
 namespace WebSite.EndPoint
 {
@@ -99,6 +100,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
             services.AddTransient<ICatalogItemService, CatalogItemService>();
             services.AddTransient<ICustormerOrderService, CustormerOrderService>();
+            services.AddTransient<IHomePageService, HomePageService>();
             #endregion
 
         }

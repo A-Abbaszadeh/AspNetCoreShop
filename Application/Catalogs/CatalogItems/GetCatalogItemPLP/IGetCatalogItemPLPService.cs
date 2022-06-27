@@ -87,6 +87,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPLP
                     Name = ci.Name,
                     Price = ci.Price,
                     Rate = 4,
+                    AvailableStock = ci.AvailableStock,
                     Image = _uriComposerService.ComposeImageUri(ci.CatalogItemImages.FirstOrDefault().Src)
                 }).ToList();
 
@@ -143,5 +144,6 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPLP
         public int Price { get; set; }
         public string Image { get; set; }
         public byte Rate { get; set; }
+        public int AvailableStock { get; set; }
     }
 }

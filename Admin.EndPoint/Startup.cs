@@ -1,10 +1,12 @@
 using Admin.EndPoint.MappingProfiles;
+using Application.Banners;
 using Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Catalogs.CatalogTypes;
 using Application.Discounts;
 using Application.Discounts.AddNewDiscountService;
 using Application.Interfaces.Contexts;
+using Application.UriComposer;
 using Application.Visitors.GetTodayReport;
 using Application.Visitors.OnlineVisitors;
 using FluentValidation;
@@ -80,6 +82,10 @@ namespace Admin.EndPoint
             services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
             services.AddTransient<IDiscountService, DiscountService>();
             services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
+            services.AddTransient<IBannerService, BannerService>();
+            var imageServerDomain = Configuration["Domain"];
+            services.AddTransient<IUriComposerService>(x => new UriComposerService(imageServerDomain));
+
             #endregion
 
             #region Fluent validation
