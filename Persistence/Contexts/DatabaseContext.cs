@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Contexts;
 using Domain.Attributes;
+using Domain.Banners;
 using Domain.Baskets;
 using Domain.Catalogs;
 using Domain.Discounts;
@@ -37,6 +38,7 @@ namespace Persistence.Contexts
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
         public DbSet<CatalogItemFavorite> CatalogItemFavorites { get; set; }
+        public DbSet<Banner> Banners { get; set; }
         #endregion
 
 
