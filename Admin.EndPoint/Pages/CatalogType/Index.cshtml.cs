@@ -14,9 +14,9 @@ namespace Admin.EndPoint.Pages.CatalogType
             _catalogTypeService = catalogTypeService;
         }
 
-        public void OnGet(int? parentId, int page = 1, int pageSize = 100)
+        public void OnGet(int? parentId, int pageIndex = 1, int pageSize = 2)
         {
-            CatalogTypeList = _catalogTypeService.GetList(parentId, page, pageSize);
+            CatalogTypeList = _catalogTypeService.GetList(parentId, pageIndex, pageSize);
         }
     }
 }

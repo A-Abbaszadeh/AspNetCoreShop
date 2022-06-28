@@ -61,7 +61,89 @@
                             }
                         </tbody>
                     </table>
+                     @{
+                        var prevDisabled = !Model.CatalogTypeList.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.CatalogTypeList.HasNextPage ? "disabled" : "";
+                      }
                 </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="dataTables_info" id="html5-extension_info" role="status" aria-live="polite">
+
+                                صفحه @Model.CatalogTypeList.PageIndex
+                                از
+                                @Model.CatalogTypeList.Pager.TotalPages
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="html5-extension_paginate">
+                                <ul class="pagination">
+
+                                    <li class="paginate_button page-item">
+                                        <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                            asp-route-pageIndex="1"
+                                            aria-controls="html5-extension"
+                                            data-dt-idx="2" tabindex="0"
+                                            class="page-link"> صفحه اول</a>
+                                    </li>
+
+                                    <li class="paginate_button page-item active">
+                                        <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                            asp-route-pageIndex="@(Model.CatalogTypeList.PageIndex - 1)"
+                                            class="btn btn-default @prevDisabled">
+                                            قبلی
+                                        </a>
+                                    </li>
+
+                                    @foreach (var item in Model.CatalogTypeList.Pager.Pages)
+                                    {
+                                        if (item == Model.CatalogTypeList.PageIndex)
+                                        {
+                                            <li class="paginate_button page-item  active">
+                                                <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                                    asp-route-pageIndex="@item"
+                                                    aria-controls="html5-extension"
+                                                    data-dt-idx="2" tabindex="0"
+                                                    class="page-link"> @item</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button page-item ">
+                                                <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                                    asp-route-pageIndex="@item"
+                                                    aria-controls="html5-extension"
+                                                    data-dt-idx="2" tabindex="0"
+                                                    class="page-link"> @item</a>
+                                            </li>
+                                        }
+
+                                    }
+
+                                    <li class="paginate_button page-item ">
+
+                                        <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                            asp-route-pageIndex="@(Model.CatalogTypeList.PageIndex + 1)"
+                                            class="btn btn-default @nextDisabled">
+                                            بعدی
+                                        </a>
+                                    </li>
+
+                                    <li class="paginate_button page-item">
+                                        <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                            asp-route-pageIndex="@Model.CatalogTypeList.Pager.TotalPages"
+                                            aria-controls="html5-extension"
+                                            data-dt-idx="2" tabindex="0"
+                                            class="page-link"> صفحه آخر</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
