@@ -1,4 +1,5 @@
 ﻿using Application.Discounts;
+using Application.Exceptions;
 using Application.Interfaces.Contexts;
 using Application.UriComposer;
 using AutoMapper;
@@ -39,6 +40,8 @@ namespace Application.Orders
         public int CreateOrder(int basketId, int userAddressId, PaymentMethod paymentMethod)
         {
             var basket = _context.Baskets.Include(b => b.Items).Include(b => b.AppliedDiscount).SingleOrDefault(b => b.Id == basketId);
+
+            if (basket is null) throw new NotFoundException(nameof(basket), basketId);
 
             int[] Ids = basket.Items.Select(b => b.CatalogItemId).ToArray();
 

@@ -31,6 +31,7 @@ using Application.Discounts;
 using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Orders.CustormerOrderService;
 using Application.HomePages;
+using WebSite.EndPoint.Middlewares;
 
 namespace WebSite.EndPoint
 {
@@ -119,6 +120,7 @@ namespace WebSite.EndPoint
                 app.UseHsts();
             }
 
+            app.UseCustomExceptionHandler();
             app.UseSetVisitorId();
 
             app.UseHttpsRedirection();
