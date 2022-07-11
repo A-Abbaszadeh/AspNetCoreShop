@@ -1,11 +1,15 @@
 ﻿using Application.HomePages;
+using Infrastructure.CacheHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebSite.EndPoint.Models;
 using WebSite.EndPoint.Utilities.Filters;
@@ -17,17 +21,37 @@ namespace WebSite.EndPoint.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHomePageService _homePageService;
+        private readonly IDistributedCache _cache;
 
-        public HomeController(ILogger<HomeController> logger, IHomePageService homePageService)
+        public HomeController(
+            ILogger<HomeController> logger, 
+            IHomePageService homePageService,
+            IDistributedCache cache)
         {
             _logger = logger;
             _homePageService = homePageService;
+            _cache = cache;
         }
 
         public IActionResult Index()
         {
-            var data = _homePageService.GetData();
-            return View(data);
+            HomePageDto homePageData = new HomePageDto();
+            var homePageCache = _cache.GetAsync(CacheHelper.GenerateHomePageCacheKey()).Result;
+            if (homePageCache is not null)
+            {
+                homePageData = JsonSerializer.Deserialize<HomePageDto>(homePageCache);
+            }
+            else
+            {
+                homePageData = _homePageService.GetData();
+                string jsonData = JsonSerializer.Serialize(homePageData);
+                byte[] encodedJson = Encoding.UTF8.GetBytes(jsonData);
+
+                var options = new DistributedCacheEntryOptions().SetSlidingExpiration(CacheHelper.DefaultCacheDuration);
+
+                _cache.SetAsync(CacheHelper.GenerateHomePageCacheKey(),encodedJson,options);
+            }
+            return View(homePageData);
         }
         [Authorize]
         public IActionResult Privacy()

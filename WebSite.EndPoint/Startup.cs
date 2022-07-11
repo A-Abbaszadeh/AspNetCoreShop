@@ -56,6 +56,13 @@ namespace WebSite.EndPoint
 
             string connectionString = Configuration["ConnectionStrings:SqlServer"];
             services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(connectionString));
+
+            services.AddDistributedSqlServerCache(option =>
+            {
+                option.ConnectionString = connectionString;
+                option.SchemaName = "dbo";
+                option.TableName = "CacheData";
+            });
             #endregion
 
             #region Identity and Security
