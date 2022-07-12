@@ -149,6 +149,11 @@ namespace WebSite.EndPoint
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+                endpoints.MapControllerRoute(
+                    name: "ProductDetails",
+                    pattern: "product/{Slug}",
+                    defaults: new { controller = "Product", action = "Details" });
+
                 endpoints.MapHub<OnlineVisitorHub>("/chathub");
             });
         }

@@ -11,7 +11,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
 {
     public interface IGetCatalogItemPDPService
     {
-        CatalogItemPDPDto Execute(int id);
+        CatalogItemPDPDto Execute(string slug);
     }
 
     public class GetCatalogItemPDPService : IGetCatalogItemPDPService
@@ -24,7 +24,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
             _uriComposerService = uriComposerService;
         }
 
-        public CatalogItemPDPDto Execute(int id)
+        public CatalogItemPDPDto Execute(string slug)
         {
             var catalogItem = _context.CatalogItems
                 .Include(p => p.CatalogType)
@@ -32,7 +32,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 .Include(p => p.Discounts)
                 .Include(p => p.CatalogItemImages)
                 .Include(p => p.CatalogItemFeatures)
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefault(p => p.Slug == slug);
 
             catalogItem.VisitCount++;
             _context.SaveChanges();

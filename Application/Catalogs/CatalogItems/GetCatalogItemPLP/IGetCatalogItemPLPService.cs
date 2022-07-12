@@ -84,6 +84,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPLP
                 .Select(ci => new CatalogPLPDto
                 {
                     Id = ci.Id,
+                    Slug = ci.Slug,
                     Name = ci.Name,
                     Price = ci.Price,
                     Rate = 4,
@@ -140,6 +141,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPLP
     public class CatalogPLPDto
     {
         public int Id { get; set; }
+        public string Slug { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
         public string Image { get; set; }
