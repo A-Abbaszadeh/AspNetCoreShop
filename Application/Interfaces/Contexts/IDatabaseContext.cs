@@ -33,6 +33,7 @@ namespace Application.Interfaces.Contexts
         DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
         DbSet<CatalogItemFavorite> CatalogItemFavorites { get; set; }
         DbSet<Banner> Banners { get; set; }
+        DbSet<CatalogItemComment> CatalogItemComments { get; set; }
         #endregion
 
         #region Signatures Method Of EF Core

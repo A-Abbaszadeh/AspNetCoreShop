@@ -39,6 +39,7 @@ namespace Persistence.Contexts
         public DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
         public DbSet<CatalogItemFavorite> CatalogItemFavorites { get; set; }
         public DbSet<Banner> Banners { get; set; }
+        public DbSet<CatalogItemComment> CatalogItemComments { get; set; }
         #endregion
 
 
