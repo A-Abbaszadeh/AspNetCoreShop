@@ -32,6 +32,8 @@ using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Orders.CustormerOrderService;
 using Application.HomePages;
 using WebSite.EndPoint.Middlewares;
+using MediatR;
+using Application.Comments.Commands;
 
 namespace WebSite.EndPoint
 {
@@ -111,6 +113,9 @@ namespace WebSite.EndPoint
             services.AddTransient<IHomePageService, HomePageService>();
             #endregion
 
+            #region MediatR
+            services.AddMediatR(typeof(SendCommentCommand).Assembly);
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
