@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Baskets
+﻿namespace Application.Baskets
 {
     public interface IBasketService
     {

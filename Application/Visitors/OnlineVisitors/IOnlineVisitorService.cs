@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Visitors.OnlineVisitors
+﻿namespace Application.Visitors.OnlineVisitors
 {
     public interface IOnlineVisitorService
     {
