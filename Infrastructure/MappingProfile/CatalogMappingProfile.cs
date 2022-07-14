@@ -4,15 +4,10 @@ using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.GetMenuItem;
 using AutoMapper;
 using Domain.Catalogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.MappingProfile
 {
-    public class CatalogMappingProfile:Profile
+    public class CatalogMappingProfile : Profile
     {
         public CatalogMappingProfile()
         {

@@ -1,9 +1,6 @@
-﻿using Application.Visitors;
-using Application.Visitors.SaveVisitorInfo;
-using Microsoft.AspNetCore.Http;
+﻿using Application.Visitors.SaveVisitorInfo;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
 using UAParser;
 
 namespace WebSite.EndPoint.Utilities.Filters

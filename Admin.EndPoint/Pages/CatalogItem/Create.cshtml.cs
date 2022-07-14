@@ -17,8 +17,8 @@ namespace Admin.EndPoint.Pages.CatalogItem
         private readonly ICatalogItemService _catalogItemService;
         private readonly IImageUploadService _imageUploadService;
         public CreateModel(
-            IAddNewCatalogItemService addNewCatalogItemService, 
-            ICatalogItemService catalogItemService, 
+            IAddNewCatalogItemService addNewCatalogItemService,
+            ICatalogItemService catalogItemService,
             IImageUploadService imageUploadService)
         {
             _addNewCatalogItemService = addNewCatalogItemService;

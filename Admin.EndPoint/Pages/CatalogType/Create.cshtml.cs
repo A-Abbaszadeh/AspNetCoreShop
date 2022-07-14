@@ -11,7 +11,7 @@ namespace Admin.EndPoint.Pages.CatalogType
     {
         private readonly ICatalogTypeService _catalogTypeService;
         private readonly IMapper _mapper;
-        public CreateModel(ICatalogTypeService catalogTypeService,IMapper mapper)
+        public CreateModel(ICatalogTypeService catalogTypeService, IMapper mapper)
         {
             _catalogTypeService = catalogTypeService;
             _mapper = mapper;

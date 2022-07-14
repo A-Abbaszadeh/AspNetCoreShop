@@ -1,6 +1,5 @@
 using Application.Catalogs.CatalogItems.CatalogItemServices;
 using Application.Dtos;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogItem

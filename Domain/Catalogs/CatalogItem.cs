@@ -15,16 +15,16 @@ namespace Domain.Catalogs
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int Price 
+        public int Price
         {
-            get 
+            get
             {
                 return GetPrice();
-            } 
-            set 
+            }
+            set
             {
                 Price = _price;
-            } 
+            }
         }
         public int? OldPrice
         {
@@ -35,7 +35,7 @@ namespace Domain.Catalogs
             set
             {
                 OldPrice = _oldPrice;
-            } 
+            }
         }
         public int? PercentDiscount { get; set; }
 

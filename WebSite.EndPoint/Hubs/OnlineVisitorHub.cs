@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebSite.EndPoint.Hubs
 {
-    public class OnlineVisitorHub:Hub
+    public class OnlineVisitorHub : Hub
     {
         private readonly IOnlineVisitorService _onlineVisitorService;
         public OnlineVisitorHub(IOnlineVisitorService onlineVisitorService)

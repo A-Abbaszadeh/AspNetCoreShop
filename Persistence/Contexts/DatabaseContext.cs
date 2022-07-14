@@ -11,15 +11,11 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfigurations;
 using Persistence.Seeds;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Persistence.Contexts
 {
-    public class DatabaseContext:DbContext, IDatabaseContext
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -47,7 +43,7 @@ namespace Persistence.Contexts
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute),true).Length > 0)
+                if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
                 {
                     modelBuilder.Entity(entityType.Name).Property<DateTime>("InsertTime").HasDefaultValue(DateTime.Now);
                     modelBuilder.Entity(entityType.Name).Property<DateTime?>("UpdateTime");
@@ -72,8 +68,8 @@ namespace Persistence.Contexts
         public override int SaveChanges()
         {
             var modifiedEntities = ChangeTracker.Entries()
-                .Where(p => p.State == EntityState.Added || 
-                p.State == EntityState.Modified || 
+                .Where(p => p.State == EntityState.Added ||
+                p.State == EntityState.Modified ||
                 p.State == EntityState.Deleted);
 
             foreach (var item in modifiedEntities)

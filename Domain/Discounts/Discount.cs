@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Discounts
 {
@@ -31,7 +28,7 @@ namespace Domain.Discounts
         public int DiscountTypeId { get; set; }
         public ICollection<CatalogItem> CatalogItems { get; set; }
         public int LimitationTimes { get; set; }
-        public DiscountLimitationType DiscountLimitation 
+        public DiscountLimitationType DiscountLimitation
         {
             get => (DiscountLimitationType)this.DiscountLimitationId;
             set => this.DiscountLimitationId = (int)value;

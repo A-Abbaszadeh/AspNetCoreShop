@@ -29,8 +29,8 @@ namespace WebSite.EndPoint.Controllers
         private string UserId = null;
 
         public BasketController(
-            IBasketService basketService, 
-            SignInManager<User> signInManager, 
+            IBasketService basketService,
+            SignInManager<User> signInManager,
             IUserAddressService userAddressService,
             IOrderService orderService,
             IPaymentService paymentService,
@@ -87,7 +87,7 @@ namespace WebSite.EndPoint.Controllers
 
             return View(model);
         }
-        
+
         [HttpPost]
         public IActionResult ShippingPayment(int Address, PaymentMethod PaymentMethod)
         {

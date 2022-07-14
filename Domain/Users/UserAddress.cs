@@ -1,9 +1,4 @@
 ﻿using Domain.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Users
 {
@@ -17,8 +12,8 @@ namespace Domain.Users
         public string PostalAddress { get; private set; }
         public string UserId { get; set; }
         public string ReciverName { get; private set; }
-        public UserAddress(string state, string city, 
-            string zipCode, string postalAddress, 
+        public UserAddress(string state, string city,
+            string zipCode, string postalAddress,
             string userId, string reciverName)
         {
             State = state;

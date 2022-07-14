@@ -28,11 +28,11 @@ namespace StaticFile.EndPoint.Controllers
             {
                 var files = Request.Form.Files;
                 var folderName = Path.Combine("Resources", "Images");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(),folderName);
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (files is not null)
                 {
                     // Upload files
-                    return Ok(Upload(files));   
+                    return Ok(Upload(files));
                 }
                 else
                 {
@@ -42,7 +42,7 @@ namespace StaticFile.EndPoint.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
-                throw new Exception ("upload image error", ex);
+                throw new Exception("upload image error", ex);
             }
         }
 

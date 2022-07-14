@@ -4,11 +4,11 @@ using AutoMapper;
 
 namespace Admin.EndPoint.MappingProfiles
 {
-    public class CatalogVMMappingProgile:Profile
+    public class CatalogVMMappingProgile : Profile
     {
         public CatalogVMMappingProgile()
         {
-            CreateMap<CatalogTypeDto,CatalogTypeViewModel>().ReverseMap();
+            CreateMap<CatalogTypeDto, CatalogTypeViewModel>().ReverseMap();
         }
     }
 }

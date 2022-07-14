@@ -21,7 +21,7 @@ namespace WebSite.EndPoint.Models.ViewModel.Register
 
         [Required(ErrorMessage = "تکرار پسورد را وارد کنید")]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password),ErrorMessage = "پسورد و تکرار آن باید برابر باشند")]
+        [Compare(nameof(Password), ErrorMessage = "پسورد و تکرار آن باید برابر باشند")]
         [Display(Name = "تکرار پسورد")]
         public string Repassword { get; set; }
 

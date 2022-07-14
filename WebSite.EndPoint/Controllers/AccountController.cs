@@ -16,7 +16,7 @@ namespace WebSite.EndPoint.Controllers
         private readonly IBasketService _basketService;
 
         public AccountController(
-            UserManager<User> userManager, 
+            UserManager<User> userManager,
             SignInManager<User> signInManager,
             IBasketService basketService)
         {
@@ -98,7 +98,7 @@ namespace WebSite.EndPoint.Controllers
             if (result.Succeeded)
             {
                 TransferBasketForUser(user.Id);
-                return Redirect(login?.ReturnUrl??"/");
+                return Redirect(login?.ReturnUrl ?? "/");
             }
 
             ModelState.AddModelError("", "ورود به حساب کاربری موفقیت آمیز نبود");

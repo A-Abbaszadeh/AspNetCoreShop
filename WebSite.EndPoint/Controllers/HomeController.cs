@@ -4,13 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using WebSite.EndPoint.Models;
 using WebSite.EndPoint.Utilities.Filters;
 
@@ -24,7 +20,7 @@ namespace WebSite.EndPoint.Controllers
         private readonly IDistributedCache _cache;
 
         public HomeController(
-            ILogger<HomeController> logger, 
+            ILogger<HomeController> logger,
             IHomePageService homePageService,
             IDistributedCache cache)
         {
@@ -49,7 +45,7 @@ namespace WebSite.EndPoint.Controllers
 
                 var options = new DistributedCacheEntryOptions().SetSlidingExpiration(CacheHelper.DefaultCacheDuration);
 
-                _cache.SetAsync(CacheHelper.GenerateHomePageCacheKey(),encodedJson,options);
+                _cache.SetAsync(CacheHelper.GenerateHomePageCacheKey(), encodedJson, options);
             }
             return View(homePageData);
         }

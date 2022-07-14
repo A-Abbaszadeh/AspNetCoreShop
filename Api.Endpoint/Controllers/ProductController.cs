@@ -2,7 +2,6 @@
 using Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Application.Comments.Commands;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Endpoint.Controllers

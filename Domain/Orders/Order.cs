@@ -4,8 +4,6 @@ using Domain.Discounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Orders
 {
@@ -24,7 +22,7 @@ namespace Domain.Orders
 
         public decimal DiscountAmount { get; private set; }
         public Discount AppliedDiscount { get; private set; }
-        public int? AppliedDiscountId { get;  private set; }
+        public int? AppliedDiscountId { get; private set; }
 
         public Order(string userId, Address address, PaymentMethod paymentMethod, List<OrderItem> orderItems, Discount discount)
         {
